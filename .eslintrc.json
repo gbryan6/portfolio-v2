@@ -1,3 +1,76 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+      "browser": true,
+      "es6": true,
+      "node": true
+  },
+  "extends": [
+      "plugin:react/recommended",
+      "airbnb"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": 6,
+      "sourceType": "module"
+  },
+  "settings": {
+      "import/resolver": {
+        "alias":{
+          "map":[
+            ["~", "."],
+            ["~/atoms", "./src/components/atoms"],
+            ["~/bosons", "./src/components/bosons"],
+            ["~/molecules", "./src/components/molecules"],
+            ["~/organisms", "./src/components/organisms"],
+            ["~/templates", "./src/components/templates"]
+          ],
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        },
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"],
+          "path": ["src"]
+        },
+        "typescript": {
+          "project": "."
+        }
+      }
+  },
+  "plugins": [
+      "react",
+      "@typescript-eslint",
+      "import",
+      "eslint-plugin-import-helpers"
+  ],
+  "rules": {
+      "react/jsx-filename-extension": [0],
+      "import/extensions": "off",
+      "no-unused-vars": "warn",
+      "react/jsx-props-no-spreading": "off",
+      "react/function-component-definition": "off",
+      "react/react-in-jsx-scope": "off",
+      "import/prefer-default-export": "off",
+      "react/require-default-props": "off",
+      "jsx-a11y/label-has-associated-control": "off",
+      "jsx-a11y/control-has-associated-label": "off",
+      "max-len": "off",
+      "no-alert": "off",
+      "no-param-reassign": [2, { "props": false }],
+      "consistent-return": "off",
+      "import-helpers/order-imports": [
+        "warn",
+        {
+          "newlinesBetween": "always",
+          "groups": [
+            ["/^react/"],
+            ["module"],
+            ["/^~//"],
+            ["parent", "sibling", "index"]
+          ],
+          "alphabetize": { "order": "asc", "ignoreCase": true }
+        }
+      ]
+  }
 }
