@@ -18,7 +18,6 @@ export default function RootLayout({
     <html lang="en" className={`${firaCode.variable}`}>
       <body>
         <Providers>
-          <GlobalStyles />
           {children}
         </Providers>
       </body>

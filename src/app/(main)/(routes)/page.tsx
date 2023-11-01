@@ -1,7 +1,6 @@
 'use client'
 
 import styled from 'styled-components'
-import { useContext } from 'react'
 import { useTheme } from '@/hooks/Theme' 
 
 const Container = styled.div`

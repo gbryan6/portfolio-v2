@@ -5,7 +5,10 @@ import { createContext, useState, useEffect, useContext } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { Theme } from '../app/types/styled'
 
+const INITIAL_STATE = dark
+
 type ThemeSwitcherData = {
+  INITIAL_STATE: Theme
   theme: Theme
   toggleTheme: () => void
 }
@@ -19,15 +22,27 @@ interface ThemeSwitcherProviderProps {
 export function ThemeSwitcherProvider({
   children,
 }: ThemeSwitcherProviderProps) {
-  const [theme, setTheme] = useState(dark)
+  const [theme, setTheme] = useState(INITIAL_STATE)
 
   function toggleTheme() {
-    setTheme(theme.title === 'dark' ? light : dark)
+    const targetTheme = theme.title === 'dark' ? light : dark
+    setTheme(targetTheme)
+    localStorage.setItem('theme', JSON.stringify(targetTheme))
   }
+
+  useEffect(() => {
+    const storageValue = localStorage.getItem('theme')
+    if (storageValue) {
+      setTheme(JSON.parse(storageValue))
+    } else {
+      setTheme(INITIAL_STATE)
+    }
+  }, [])
 
   return (
     <themeSwitcherContext.Provider
       value={{
+        INITIAL_STATE,
         theme,
         toggleTheme,
       }}
