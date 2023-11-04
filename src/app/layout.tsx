@@ -4,6 +4,7 @@ import Providers from '@/hooks/Providers'
 
 
 const firaCode = FiraCode({
+  weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   variable: '--font-fira-code',
   display: 'swap',

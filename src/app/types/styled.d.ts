@@ -5,10 +5,18 @@ export type Theme = {
   colors: {
     activeTitle: string,
     background: string,
+    backgroundContent: string,
     buttonColor: string,
     fontPrimary: string,
     fontSecondary: string,
     line: string,
+  },
+  typograph: {
+    head: string,
+    subhead: string,
+    body: string,
+    label: string,
+    snippet: string,
   }
 };
 
