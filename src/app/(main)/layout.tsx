@@ -1,5 +1,6 @@
 'use client'
 
+import Footer from '@/components/molecules/Footer'
 import Header from '@/components/molecules/Header'
 import { Container, Content } from '@/styles/pages/layout'
 
@@ -13,7 +14,7 @@ export default function AppLayout({
       <Content>
         <Header />
         {children}
-        <footer>Aqui o footer</footer>
+        <Footer />
       </Content>
     </Container>
   )

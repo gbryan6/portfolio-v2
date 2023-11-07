@@ -13,7 +13,7 @@ function Header() {
     <Container>
       <div className="left">
         <Text tag="p" font="label" color="fontPrimary">
-          Gabriel Bryan
+          gabriel-bryan
         </Text>
         <NavButton href="/" active={pathname == '/'}>
           <Text tag="p" font="label" color="fontPrimary">

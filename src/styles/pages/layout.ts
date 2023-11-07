@@ -16,5 +16,5 @@ export const Content = styled.div`
   border-radius: 0.8rem;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 5.6rem 1fr 4.8rem;
+  grid-template-rows: 5.6rem 1fr 5.2rem;
 `
