@@ -2,7 +2,7 @@ import { Theme } from '@/app/types/styled'
 
 const typhograph = {
   head: '62px',
-  subhead: '32px',
+  subHead: '32px',
   body: '18px',
   label: '16px',
   snippet: '14px',

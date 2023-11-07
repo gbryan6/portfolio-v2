@@ -7,7 +7,8 @@ interface ITextProps {
   tag: keyof JSX.IntrinsicElements;
   children: React.ReactNode;
   font: keyof Theme['typograph'];
-  color: keyof Theme['colors']
+  color: keyof Theme['colors'];
+  className?: string
 }
 
 function Text ({ tag, font='head', color='fontPrimary', children, ...rest }: ITextProps){

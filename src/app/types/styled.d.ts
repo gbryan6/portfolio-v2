@@ -13,7 +13,7 @@ export type Theme = {
   },
   typograph: {
     head: string,
-    subhead: string,
+    subHead: string,
     body: string,
     label: string,
     snippet: string,
