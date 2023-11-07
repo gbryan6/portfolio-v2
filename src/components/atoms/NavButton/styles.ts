@@ -73,22 +73,4 @@ export const Container = styled(Link)<IButtonProps>`
         right: 0;
       }
     `}
-
-  @keyframes scaleAndRotate {
-    0% {
-      width: 0px;
-      height: 0px;
-      transform: rotate(0deg);
-    }
-    50% {
-      width: 16px; /* Tamanho intermediário */
-      height: 16px; /* Tamanho intermediário */
-      transform: rotate(180deg);
-    }
-    100% {
-      width: 24px; /* Tamanho final */
-      height: 24px; /* Tamanho final */
-      transform: rotate(360deg);
-    }
-  }
 `

@@ -35,9 +35,9 @@ function Header() {
         <NavButton href="#" iconOnly onClick={toggleTheme}>
           <Text tag="p" font="label" color="fontPrimary">
             {theme.title == 'light' ? (
-              <RiSunFoggyFill className="theme" />
-            ) : (
               <RiMoonFoggyFill className="theme" />
+            ) : (
+              <RiSunFoggyFill className="theme" />
             )}
           </Text>
         </NavButton>
