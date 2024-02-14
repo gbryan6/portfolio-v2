@@ -1,4 +1,5 @@
-import { NavButton, Text } from '@/components/atoms'
+import { Text } from '@/components/atoms'
+import { NavButton } from '@/components/molecules'
 import { usePathname } from 'next/navigation'
 import { RiSunFoggyFill, RiMoonFoggyFill } from 'react-icons/ri'
 

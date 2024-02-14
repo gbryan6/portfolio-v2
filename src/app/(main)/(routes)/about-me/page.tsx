@@ -1,10 +1,12 @@
 'use client'
 
+import { Container } from '@/styles/pages/aboutMe'
+
 function page() {
   return (
-    <h1>
+    <Container>
       SOBRE MIM
-    </h1>
+    </Container>
   );
 }
 

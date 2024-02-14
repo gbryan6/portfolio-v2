@@ -1,7 +1,7 @@
 'use client'
 
-import Footer from '@/components/molecules/Footer'
-import Header from '@/components/molecules/Header'
+import { Footer, Header} from '@/components/organisms/'
+
 import { Container, Content } from '@/styles/pages/layout'
 
 export default function AppLayout({

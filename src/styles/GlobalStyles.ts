@@ -8,7 +8,6 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: var(--font-fira-code);
-    transition: color 0.4s ease-out;
   }
 
   html {

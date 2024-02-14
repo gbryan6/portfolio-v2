@@ -1,7 +1,3 @@
-import NavButton from "./NavButton";
-import Text from "./Text";
+import Text from './Text'
 
-export {
-  NavButton,
-  Text
-}
+export { Text }

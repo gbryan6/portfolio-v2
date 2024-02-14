@@ -1,13 +1,22 @@
 'use client'
 
 import Link from 'next/link'
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 interface IButtonProps {
   active?: boolean
   iconOnly?: boolean
   textIcon?: boolean
 }
+
+const growAnimation = keyframes`
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+`;
 
 export const Container = styled(Link)<IButtonProps>`
   display: flex;
@@ -34,8 +43,12 @@ export const Container = styled(Link)<IButtonProps>`
     height: 24px;
   }
 
-  > p:hover {
-    color: ${({ theme }) => theme.colors.activeTitle};
+  &:hover {
+    > p,
+    svg {
+      color: ${({ theme }) => theme.colors.activeTitle};
+      transition: 0.4s ease-in;
+    }
   }
 
   ${({ textIcon }) =>
@@ -53,6 +66,8 @@ export const Container = styled(Link)<IButtonProps>`
           color: ${({ theme }) => theme.colors.fontPrimary};
         }
       }
+
+      p
     `}
 
   ${({ active }) =>
@@ -70,7 +85,7 @@ export const Container = styled(Link)<IButtonProps>`
         background-color: orange;
         top: 100%;
         left: 0;
-        right: 0;
+        animation: ${growAnimation} 0.4s forwards;
       }
     `}
 `

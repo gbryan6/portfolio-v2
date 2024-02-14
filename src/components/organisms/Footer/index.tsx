@@ -1,4 +1,5 @@
-import { NavButton, Text } from '@/components/atoms'
+import { Text } from '@/components/atoms'
+import { NavButton } from '@/components/molecules'
 import { Container } from './styles'
 import { RiGithubFill, RiLinkedinBoxFill } from 'react-icons/ri'
 

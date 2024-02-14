@@ -1,11 +1,9 @@
 import styled from 'styled-components'
-import backgroundImage from '/public/background_blurs.png'
 
 export const Container = styled.main`
   display: flex;
   width: 100%;
   height: 100%;
-
 `
 
 export const Content = styled.div`

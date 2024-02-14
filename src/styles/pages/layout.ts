@@ -5,6 +5,8 @@ import backgroundImage from '/public/background_blurs.png'
 
 export const Container = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.background};
@@ -19,6 +21,12 @@ export const Content = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 5.6rem 1fr 5.2rem;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: 1782px;
+  max-height: 941px;
 
   background-image: url(${backgroundImage.src});
   background-repeat: no-repeat; /* Impede a repetição da imagem */
