@@ -10,7 +10,7 @@ export const Container = styled.div`
   flex-direction: column;
   min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.background};
-  padding: 4.8rem;
+  padding: 2.8rem;
   
 `
 export const Content = styled.div`
@@ -25,8 +25,8 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
 
-  max-width: 1782px;
-  max-height: 941px;
+  max-width: 2400px;
+  max-height: 1200px;
 
   background-image: url(${backgroundImage.src});
   background-repeat: no-repeat; /* Impede a repetição da imagem */

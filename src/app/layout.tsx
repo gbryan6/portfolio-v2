@@ -10,7 +10,7 @@ const firaCode = FiraCode({
 
 export const metadata = {
   title: {
-    default: 'Gabriel Bryan | dev',
+    default: 'Gabriel Bryan | Dev',
   },
 }
 

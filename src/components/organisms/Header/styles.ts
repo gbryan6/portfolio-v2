@@ -23,6 +23,7 @@ export const Container = styled.nav`
     padding-left: 2.2rem;
     padding-right: 15.4rem;
     font-weight: 500;
+    width: 31rem;
   }
 
   .right {
