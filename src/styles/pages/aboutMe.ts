@@ -14,14 +14,3 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
 `
-
-export const TabsContainer = styled.div`
-  grid-area: TB;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-
-  border-bottom: 1px solid ${({ theme }) => theme.colors.line};
-
-`

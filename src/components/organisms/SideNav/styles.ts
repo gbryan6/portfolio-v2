@@ -19,8 +19,25 @@ export const Container = styled.aside`
     border-right: 1px solid ${({ theme }) => theme.colors.line};
     padding: 2rem 0;
 
+    .side-nav_left-button{
+      display: flex;
+      cursor: pointer;
+    }
+
+    .side-nav_left-button:hover{
+      svg{
+        color: ${({ theme }) => theme.colors.activeTitle};
+      }
+    }
+
+    .side-nav_left-button.active{
+      svg{
+        color: ${({ theme }) => theme.colors.activeTitle};
+      }
+    }
+
     svg {
-      width: 2.4rem;
+      width: 2rem;
       height: 2rem;
       color: ${({ theme }) => theme.colors.fontPrimary};
     }

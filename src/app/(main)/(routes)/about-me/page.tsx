@@ -1,23 +1,20 @@
 'use client'
 
-import Accordion from '@/components/molecules/Accordion';
-import { RiTerminalBoxFill } from "react-icons/ri";
-import { FaGamepad } from "react-icons/fa6";
-import { Container, TabsContainer } from '@/styles/pages/aboutMe'
-import SideFolder from '@/components/molecules/SideFolder';
-import IconText from '@/components/molecules/IconText';
-
-import { AiFillFileText } from "react-icons/ai";
+import { Container } from '@/styles/pages/aboutMe'
+import { sideNavData } from './_data'
 import SideNav from '@/components/organisms/SideNav';
+import { useTabs } from '@/hooks/Tabs';
+import TabBar from '@/components/molecules/TabBar';
 
 export default function AboutMe() {
+  const { activeInfo } = useTabs()
+
+  const actualNav = sideNavData[activeInfo];
+
   return (
     <Container>
-      <SideNav />
-      <TabsContainer>
-        {/* <Tab />
-        {Conteudo da tab ativa} */}
-      </TabsContainer>
+      <SideNav sections={actualNav.sections} />
+      <TabBar tabs='' />
     </Container>
   );
 }

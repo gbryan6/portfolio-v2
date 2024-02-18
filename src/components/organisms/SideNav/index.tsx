@@ -6,36 +6,85 @@ import IconText from '@/components/molecules/IconText'
 import { AiFillFileText } from 'react-icons/ai'
 import { RiTerminalBoxFill } from 'react-icons/ri'
 import { FaGamepad } from 'react-icons/fa6'
+import { useTabs } from '@/hooks/Tabs'
 
-function SideNav() {
+interface ISections {
+  title: string
+  folders: {
+    title: string
+    color: string
+    tabs: {
+      id: string
+      title: string
+      content: JSX.Element
+      active: boolean
+    }[]
+  }[]
+}
+
+interface ISideNav {
+  hasLeft?: boolean
+  sections: ISections[]
+}
+
+function SideNav({ sections, hasLeft = true }: ISideNav) {
+  const { activeInfo, setActiveInfo } = useTabs()
   return (
     <Container>
-      <div className="side-nav_left">
-        <RiTerminalBoxFill />
-        <FaGamepad width={20} height={20} />
-      </div>
+      {hasLeft && (
+        <div className="side-nav_left">
+          <span
+            className={
+              activeInfo === 'dev'
+                ? 'side-nav_left-button active'
+                : 'side-nav_left-button'
+            }
+            onClick={() => setActiveInfo('dev')}
+          >
+            <RiTerminalBoxFill />
+          </span>
+          <span
+            className={
+              activeInfo === 'hobbies'
+                ? 'side-nav_left-button active'
+                : 'side-nav_left-button'
+            }
+            onClick={() => setActiveInfo('hobbies')}
+          >
+            <FaGamepad width={10} height={10} />
+          </span>
+        </div>
+      )}
       <div className="side-nav_right">
-        <Accordion title="informações-pessoais">
-          <SideFolder color="#E99287" title="bio">
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-          </SideFolder>
-          <SideFolder color="#43D9AD" title="interesses">
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-          </SideFolder>
-          <SideFolder color="#3A49A4" title="faculdade">
-            <IconText text="sobre-mim" icon={AiFillFileText} />
-          </SideFolder>
-        </Accordion>
+        {sections.map((section) => {
+          const { folders, title } = section
+
+          return (
+            <Accordion title={title} key={title}>
+              {folders.map((folder) => {
+                const { tabs } = folder
+
+                return (
+                  <SideFolder
+                    color={folder.color}
+                    title={folder.title}
+                    key={folder.title}
+                  >
+                    {tabs.map((tab) => {
+                      return (
+                        <IconText
+                          text={tab.title}
+                          icon={AiFillFileText}
+                          key={tab.id}
+                        />
+                      )
+                    })}
+                  </SideFolder>
+                )
+              })}
+            </Accordion>
+          )
+        })}
         <Accordion title="contato">
           <IconText text="31 982786211" icon={AiFillFileText} />
         </Accordion>

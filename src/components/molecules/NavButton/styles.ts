@@ -83,7 +83,7 @@ export const Container = styled(Link)<IButtonProps>`
         width: 100%;
         height: 3px;
         background-color: orange;
-        top: 100%;
+        top: 95%;
         left: 0;
         animation: ${growAnimation} 0.4s forwards;
       }
