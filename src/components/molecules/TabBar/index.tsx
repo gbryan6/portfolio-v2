@@ -1,7 +1,9 @@
 import { Container } from "./styles"
 import Tab from '../Tab'
+import { Tab as TabType } from '@/hooks/Tabs'
+
 interface ITabBar {
-  tabs: string
+  tabs: TabType[]
 }
 
 export default function TabBar({
@@ -9,11 +11,13 @@ export default function TabBar({
 }: ITabBar) {
   return (
     <Container>
-      <Tab title="sobre-mim.txt" />
-      <Tab title="experiencias.txt" />
-      <Tab title="front-end.txt" />
-      <Tab title="back-end.txt" />
-      <Tab title="ADS.txt" />
+      {
+        tabs.map((tab) => {
+          return (
+            <Tab tabData={tab} key={tab.id} />
+          )
+        })
+      }
     </Container>
   )
 }

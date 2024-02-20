@@ -7,6 +7,14 @@ export const Container = styled.div`
   width: 100%;
 
   margin-bottom: 0.8rem;
+  
+  cursor: pointer;
+
+  &:hover {
+    span, svg {
+      color: ${({ theme }) => theme.colors.activeTitle};
+    }
+  }
 
   > svg {
     width: 1.5rem;

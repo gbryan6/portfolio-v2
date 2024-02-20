@@ -4,6 +4,7 @@ export type Theme = {
   title: string,
   colors: {
     activeTitle: string,
+    activeBackground: string,
     background: string,
     backgroundContent: string,
     buttonColor: string,
@@ -14,6 +15,7 @@ export type Theme = {
   typograph: {
     head: string,
     subHead: string,
+    pageTitle: string,
     body: string,
     label: string,
     snippet: string,

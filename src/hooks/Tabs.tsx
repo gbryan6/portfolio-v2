@@ -5,7 +5,7 @@ import React, { createContext, useState, useContext } from 'react'
 export type Tab = {
   id: string
   title: string
-  content: React.ReactNode
+  content: string
   active: boolean
 }
 
@@ -37,11 +37,25 @@ export const TabsProvider: React.FC<ITabsContextProvider> = ({ children }) => {
   }
 
   const addTab = (newTab: Tab) => {
-    setTabs([...tabs, newTab])
+    const tabExists = tabs.some((tab) => tab.id === newTab.id)
+
+    if (tabExists) {
+      const updatedTabs = tabs.map((tab) => ({
+        ...tab,
+        active: tab.id === newTab.id,
+      }))
+      setTabs(updatedTabs)
+    } else {
+      setTabs([
+        ...tabs.map((tab) => ({ ...tab, active: false })),
+        { ...newTab, active: true },
+      ])
+    }
   }
 
   const removeTab = (tabId: string) => {
     const updatedTabs = tabs.filter((tab) => tab.id !== tabId)
+    console.log(updatedTabs)
     setTabs(updatedTabs)
   }
 

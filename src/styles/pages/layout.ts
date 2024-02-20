@@ -25,11 +25,11 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
 
-  max-width: 2400px;
-  max-height: 1200px;
+  /* max-width: 2400px;
+  max-height: 1200px; */
 
   background-image: url(${backgroundImage.src});
-  background-repeat: no-repeat; /* Impede a repetição da imagem */
+  background-repeat: no-repeat;
   background-position: 90% 50%;
   position: relative;
 `

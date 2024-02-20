@@ -16,7 +16,7 @@ interface ISections {
     tabs: {
       id: string
       title: string
-      content: JSX.Element
+      content: string
       active: boolean
     }[]
   }[]
@@ -28,7 +28,9 @@ interface ISideNav {
 }
 
 function SideNav({ sections, hasLeft = true }: ISideNav) {
-  const { activeInfo, setActiveInfo } = useTabs()
+  const { activeInfo, setActiveInfo, setActiveTab, addTab, removeTab, tabs: tebs } = useTabs()
+
+  console.log(tebs)
   return (
     <Container>
       {hasLeft && (
@@ -76,6 +78,7 @@ function SideNav({ sections, hasLeft = true }: ISideNav) {
                           text={tab.title}
                           icon={AiFillFileText}
                           key={tab.id}
+                          onClick={() => addTab(tab)}
                         />
                       )
                     })}

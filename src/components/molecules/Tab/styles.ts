@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
-export const Container = styled.li`
+interface ITabStyleProps{
+  active: boolean
+}
+
+export const Container = styled.li<ITabStyleProps>`
   display: flex;
   align-items: center;
   justify-content: center;
+
 
   padding: 0 1.2rem;
 
@@ -11,8 +16,13 @@ export const Container = styled.li`
 
   border-right: 1px solid ${({ theme }) => theme.colors.line};
 
+  background-color:  ${({ active, theme }) => active && theme.colors.activeBackground};
+
+  cursor: pointer;
+
   > p {
     margin-right: 4.6rem;
+    color:  ${({ active, theme }) => active && theme.colors.activeTitle};
   } 
 
   .tab-button_close {
@@ -29,13 +39,19 @@ export const Container = styled.li`
 
     svg {
       width: 1.8rem;
-    height: 1.8rem;
+      height: 1.8rem;
       color: ${({ theme }) => theme.colors.fontPrimary}
     }
   }
 
+  &:hover {
+    p {
+      color: ${({ theme }) => theme.colors.activeTitle}
+    }
+  }
+
   .tab-button_close:hover{
-    background-color: red;
+    background-color: #ea4835;
   }
 
 `;
