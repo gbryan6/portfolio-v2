@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useState, useContext } from 'react'
+import React, { createContext, useState, useContext, useMemo } from 'react'
 
 export type Tab = {
   id: string
@@ -12,6 +12,7 @@ export type Tab = {
 type TabsContextType = {
   tabs: Tab[]
   activeInfo: 'dev' | 'hobbies'
+  activeTab: Tab | undefined
   setActiveTab: (tabId: string) => void
   setActiveInfo: (info: 'dev' | 'hobbies') => void
   addTab: (newTab: Tab) => void
@@ -59,11 +60,16 @@ export const TabsProvider: React.FC<ITabsContextProvider> = ({ children }) => {
     setTabs(updatedTabs)
   }
 
+  const activeTab = useMemo(() => {
+    return tabs.find((tab) => tab.active);
+  }, [tabs])
+
   return (
     <TabsContext.Provider
       value={{
         tabs,
         activeInfo,
+        activeTab,
         setActiveTab,
         setActiveInfo,
         addTab,

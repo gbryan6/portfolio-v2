@@ -5,9 +5,10 @@ import { IoIosClose } from 'react-icons/io'
 
 interface ITabData {
   tabData: Tab
+  noAction?: boolean
 }
 
-export default function Tab({ tabData }: ITabData) {
+export default function Tab({ tabData, noAction }: ITabData) {
   const { setActiveTab, removeTab } = useTabs()
 
 
@@ -17,7 +18,7 @@ export default function Tab({ tabData }: ITabData) {
   };
 
   return (
-    <Container active={tabData.active} onClick={() => setActiveTab(tabData.id)}>
+    <Container active={tabData.active} onClick={() => setActiveTab(tabData.id)} noAction={noAction}>
       <Text tag="p" font="snippet" color="fontPrimary">
         {tabData.title}
       </Text>

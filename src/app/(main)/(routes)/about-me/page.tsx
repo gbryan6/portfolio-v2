@@ -10,15 +10,13 @@ import TabContentEditor from '@/components/molecules/TabContentEditor'
 
 
 export default function AboutMe() {
-  const { activeInfo, tabs } = useTabs()
+  const { activeInfo, activeTab, tabs } = useTabs()
 
   const actualNav = sideNavData[activeInfo]
 
-  const activeTab = tabs.find((tab) => tab.active);
-
   return (
     <Container>
-      <SideNav sections={actualNav.sections} />
+      <SideNav sections={actualNav.sections} hasLeft />
       {tabs.length > 0 && <TabBar tabs={tabs} />}
       {tabs.length > 0 && <TabContentEditor text={activeTab?.content} />}
       {tabs.length < 1 && <NoContentTabs />}

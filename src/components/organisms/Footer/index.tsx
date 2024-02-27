@@ -11,12 +11,12 @@ function Footer() {
         <Text tag="p" font="snippet" color="fontPrimary">
           me encontre no:
         </Text>
-        <NavButton iconOnly href="#">
+        <NavButton iconOnly href="https://www.linkedin.com/in/gabriel-bryan-241078194/" target='_blank'>
           <Text tag="p" font="snippet" color="fontPrimary">
             <RiLinkedinBoxFill />
           </Text>
         </NavButton>
-        <NavButton iconOnly href="#">
+        <NavButton iconOnly href="https://github.com/gbryan6" target='_blank'>
           <Text tag="p" font="snippet" color="fontPrimary">
             <RiGithubFill />
           </Text>

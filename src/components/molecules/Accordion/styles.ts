@@ -65,4 +65,8 @@ export const Container = styled.div<IAccordion>`
     animation-name: ${({ isOpen }) => (isOpen && fadeIn)};
   }
 
+  .label-button {
+    margin-bottom: 0.8rem;
+  }
+
 `;

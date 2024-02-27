@@ -20,6 +20,7 @@ export const Content = styled.div`
   .dev-name {
     padding: 1.6rem 0;
   }
+  
   .snippet-purple {
     color: #4D5BCE;
   }

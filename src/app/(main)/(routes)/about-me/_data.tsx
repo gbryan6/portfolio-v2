@@ -99,13 +99,13 @@ export const sideNavData = {
               {
                 id: "front-end",
                 title: "front-end.txt",
-                content: `<></>`,
+                content: `"Que cara preguiçoso não escreveu nada ainda ..."`,
                 active: false
               },
               {
                 id: "back-end",
                 title: "back-end.txt",
-                content: `<></>`,
+                content: `"Que cara preguiçoso não escreveu nada ainda ..."`,
                 active: false
               }
             ]
@@ -117,7 +117,7 @@ export const sideNavData = {
               {
                 id: "ads",
                 title: "ADS.txt",
-                content: `<></>`,
+                content: `"Que cara preguiçoso não escreveu nada ainda ..."`,
                 active: false
               }
             ]
@@ -132,37 +132,25 @@ export const sideNavData = {
         title: 'hobbies',
         folders: [
           {
-            title: 'games',
-            color: "#E99287",
-            tabs: [
-              {
-                id: "i-play",
-                title: "o-que-jogo.txt",
-                content: `<></>`,
-                active: false
-              },
-            ]
-          },
-          {
-            title: 'musicas',
-            color: "#43D9AD",
-            tabs: [
-              {
-                id: "i-hear",
-                title: "o-que-ouço.txt",
-                content: `<></>`,
-                active: false
-              }
-            ]
-          },
-          {
             title: 'curiosidades',
             color: "#3A49A4",
             tabs: [
               {
                 id: "curiosities",
                 title: "curiosidades.txt",
-                content: `<></>`,
+                content: `"Que cara preguiçoso não escreveu nada ainda ..."`,
+                active: false
+              },
+              {
+                id: "musics",
+                title: "musica.txt",
+                content: `"Que cara preguiçoso não escreveu nada ainda ..."`,
+                active: false
+              },
+              {
+                id: "games",
+                title: "games.txt",
+                content: `"Que cara preguiçoso não escreveu nada ainda ..."`,
                 active: false
               }
             ]

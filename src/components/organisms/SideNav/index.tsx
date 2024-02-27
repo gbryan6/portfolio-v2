@@ -24,13 +24,13 @@ interface ISections {
 
 interface ISideNav {
   hasLeft?: boolean
-  sections: ISections[]
+  sections?: ISections[]
+  children?: React.ReactNode
 }
 
-function SideNav({ sections, hasLeft = true }: ISideNav) {
-  const { activeInfo, setActiveInfo, setActiveTab, addTab, removeTab, tabs: tebs } = useTabs()
+function SideNav({ sections, hasLeft = false, children }: ISideNav) {
+  const { activeInfo, setActiveInfo, addTab } = useTabs()
 
-  console.log(tebs)
   return (
     <Container>
       {hasLeft && (
@@ -58,39 +58,53 @@ function SideNav({ sections, hasLeft = true }: ISideNav) {
         </div>
       )}
       <div className="side-nav_right">
-        {sections.map((section) => {
-          const { folders, title } = section
+        {sections &&
+          sections.map((section) => {
+            const { folders, title } = section
 
-          return (
-            <Accordion title={title} key={title}>
-              {folders.map((folder) => {
-                const { tabs } = folder
+            return (
+              <>
+                <Accordion title={title} key={title}>
+                  {folders.map((folder) => {
+                    const { tabs } = folder
 
-                return (
-                  <SideFolder
-                    color={folder.color}
-                    title={folder.title}
-                    key={folder.title}
-                  >
-                    {tabs.map((tab) => {
-                      return (
-                        <IconText
-                          text={tab.title}
-                          icon={AiFillFileText}
-                          key={tab.id}
-                          onClick={() => addTab(tab)}
-                        />
-                      )
-                    })}
-                  </SideFolder>
-                )
-              })}
-            </Accordion>
-          )
-        })}
-        <Accordion title="contato">
-          <IconText text="31 982786211" icon={AiFillFileText} />
-        </Accordion>
+                    return (
+                      <SideFolder
+                        color={folder.color}
+                        title={folder.title}
+                        key={folder.title}
+                      >
+                        {tabs.map((tab) => {
+                          return (
+                            <IconText
+                              text={tab.title}
+                              icon={AiFillFileText}
+                              key={tab.id}
+                              onClick={() => addTab(tab)}
+                              className="file-folder"
+                            />
+                          )
+                        })}
+                      </SideFolder>
+                    )
+                  })}
+                </Accordion>
+                <Accordion title="contato">
+                  <IconText
+                    text="31 982786211"
+                    icon={AiFillFileText}
+                    className="label-button"
+                  />
+                  <IconText
+                    text="gabrielsalmi2011@gmail.com"
+                    icon={AiFillFileText}
+                    className="label-button"
+                  />
+                </Accordion>
+              </>
+            )
+          })}
+        {children}
       </div>
     </Container>
   )

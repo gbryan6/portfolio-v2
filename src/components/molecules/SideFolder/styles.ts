@@ -66,5 +66,9 @@ export const Container = styled.div<ISideFolderStyles>`
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
     animation-name: ${({ isOpen }) => (isOpen && fadeIn)};
+
+    .file-folder {
+      margin-bottom: 0.8rem;
+    }
   }
 `
