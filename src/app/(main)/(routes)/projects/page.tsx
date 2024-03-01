@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Tab from '@/components/molecules/Tab'
 import Accordion from '@/components/molecules/Accordion'
 import TabBar from '@/components/molecules/TabBar'
@@ -18,13 +18,24 @@ interface Tech {
 }
 
 function Page() {
-  const [techs] = useState<Tech[]>([
-    { icon: FaHtml5, selected: false, techName: 'HTML', id: 'html-tech' },
-    { icon: FaCss3, selected: false, techName: 'CSS', id: 'css-tech' },
+  const [selectedTechs, setSelectedTechs] = useState<string[]>([])
+  const [techs, setTechs] = useState<Tech[]>([
+    {
+      icon: FaHtml5,
+      selected: false,
+      techName: 'HTML',
+      id: 'html-tech',
+    },
+    {
+      icon: FaCss3,
+      selected: false,
+      techName: 'CSS',
+      id: 'css-tech',
+    },
     {
       icon: FaReact,
       selected: false,
-      techName: 'styled-components',
+      techName: 'Styled-components',
       id: 'styled-components-tech',
     },
     {
@@ -45,29 +56,58 @@ function Page() {
       techName: 'Typescript',
       id: 'typescript-tech',
     },
-    { icon: FaReact, selected: false, techName: 'React', id: 'react-tech' },
+    {
+      icon: FaReact,
+      selected: false,
+      techName: 'React',
+      id: 'react-tech',
+    },
   ])
+
+  const handleTechSelect = (id: string) => {
+    setTechs((prevTechs) =>
+      prevTechs.map((tech) =>
+        tech.id === id ? { ...tech, selected: !tech.selected } : tech
+      )
+    )
+
+    setTechs((updatedTechs) => {
+      const selectedTechNames = updatedTechs
+        .filter((tech) => tech.selected)
+        .map((tech) => tech.techName)
+      setSelectedTechs(selectedTechNames)
+      return updatedTechs
+    })
+  }
 
   return (
     <Container>
       <SideNav>
         <Accordion title="projetos">
           {techs.map((tech) => {
-            return <TechCheckbox key={tech.id} techCheckboxData={tech} />
+            return (
+              <TechCheckbox
+                key={tech.id}
+                techCheckboxData={tech}
+                onChangeValue={(tech) => handleTechSelect(tech.id)}
+              />
+            )
           })}
         </Accordion>
       </SideNav>
-      <TabBar>
-        <Tab
-          tabData={{
-            active: false,
-            content: '',
-            title: 'react;',
-            id: 'default-tab',
-          }}
-          noAction={true}
-        />
-      </TabBar>
+      {selectedTechs.length > 0 && (
+        <TabBar>
+          <Tab
+            tabData={{
+              active: false,
+              content: '',
+              title: `${selectedTechs.join('; ')}`,
+              id: 'default-tab',
+            }}
+            noAction={true}
+          />
+        </TabBar>
+      )}
     </Container>
   )
 }

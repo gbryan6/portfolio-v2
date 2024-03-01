@@ -18,13 +18,9 @@ interface ITechCheckBoxProps {
 }
 
 function TechCheckbox({ techCheckboxData, onChangeValue }: ITechCheckBoxProps) {
-  const [checked, setChecked] = useState<boolean>(false)
-
-  const { icon, techName } = techCheckboxData
+  const { icon, techName, selected } = techCheckboxData
 
   const handleChange = () => {
-    const newValue = !checked
-    setChecked(newValue)
     if (onChangeValue) {
       onChangeValue(techCheckboxData)
     }
@@ -32,11 +28,11 @@ function TechCheckbox({ techCheckboxData, onChangeValue }: ITechCheckBoxProps) {
 
   return (
     <Container onClick={() => handleChange()}>
-      <Checkbox checked={checked} checkboxId={techName} />
+      <Checkbox checked={selected} checkboxId={techName} />
       <IconText
         text={techName}
         icon={icon}
-        active={checked}
+        active={selected}
         className="tech-checkbox_right"
       />
     </Container>

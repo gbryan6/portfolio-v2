@@ -13,16 +13,52 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
   padding-left: 31rem;
-  padding-bottom: 15rem;
 
   font-weight: normal;
+  .writer {
+    display: flex;
+    flex-direction: column;
+    
+    .writer-top {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 4.2rem;
+    }
 
-  .dev-name {
-    padding: 1.6rem 0;
+    .writer-bottom{
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.8rem;
+    }
   }
-  
+
+  .snippet {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .snippet-break-column {
+    padding-left: 2rem;
+  }
+
   .snippet-purple {
-    color: #4D5BCE;
+    color: #4d5bce;
   }
 
+  .snippet-green {
+    color: #43d9ad;
+  }
+
+  .snippet-orange {
+    color: #e99287;
+  }
+
+  .snippet-red {
+    color: #f16b6b;
+  }
+
+  .snippet-download {
+    color: white;
+  }
 `
