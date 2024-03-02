@@ -1,6 +1,7 @@
 'use client'
 
 import { Text } from '@/components/atoms'
+import SideBox from '@/components/molecules/SideBox'
 import useTypewriter from '@/hooks/useTypewriter'
 import { Container, Content } from '@/styles/pages/home'
 import { useState } from 'react'
@@ -11,7 +12,7 @@ export default function Home() {
   const hello = useTypewriter('Olá 👋. Eu sou', 50, 0)
   const name = useTypewriter('Gabriel Bryan', 50, 700)
   const role = useTypewriter('> Front-end developer', 50, 1400)
-  const infoText1 = useTypewriter('// Pressione o botão ao lado', 50, 2550)
+  const infoText1 = useTypewriter('// Pressione o botão', 50, 2550)
   const infoText2 = useTypewriter('// para baixar o meu curriculo.', 50, 3950)
 
   function TextDowload() {
@@ -19,36 +20,36 @@ export default function Home() {
     const lineOneVar = useTypewriter('curriculo ', 50, 300)
     const lineOneEquals = useTypewriter('= ', 50, 380)
     const lineOneOpenBracket = useTypewriter('{', 50, 430)
-    const lineTwoAttribute = useTypewriter('    download', 50, 450)
+    const lineTwoAttribute = useTypewriter('download', 50, 450)
     const lineTwoColon = useTypewriter(': ', 50, 1050)
     const lineTwoString = useTypewriter(
-      '“gbryandev.com.br/curriculo”,',
+      '() => “gbryandev.com.br/curriculo”,',
       50,
       1150
     )
     const lineTwoCloseBracket = useTypewriter('}', 50, 2450)
     const downloadCVlabel = useTypewriter('curriculo.', 50, 2500)
-    const downloadCVbutton = useTypewriter('download', 50, 3000)
+    const downloadCVbutton = useTypewriter('download()', 50, 3000)
 
     return (
-      <Text tag="p" font="label" color="activeTitle" className="snippet">
+      <Text tag="p" font="snippet" color="activeTitle" className="snippet">
         <Text
           tag="span"
-          font="label"
+          font="snippet"
           color="activeTitle"
           className="snippet-purple"
         >
           {lineOneType}
           <Text
             tag="span"
-            font="label"
+            font="snippet"
             color="activeTitle"
             className="snippet-green"
           >
             {lineOneVar}
-            <Text tag="span" font="label" color="activeTitle">
+            <Text tag="span" font="snippet" color="activeTitle">
               {lineOneEquals}
-              <Text tag="span" font="label" color="activeTitle">
+              <Text tag="span" font="snippet" color="activeTitle">
                 {lineOneOpenBracket}
               </Text>
             </Text>
@@ -56,21 +57,21 @@ export default function Home() {
         </Text>
         <Text
           tag="span"
-          font="label"
+          font="snippet"
           color="activeTitle"
           className="snippet-break-column"
         >
           {lineTwoAttribute}
           <Text
             tag="span"
-            font="label"
+            font="snippet"
             color="activeTitle"
             className="snippet-red"
           >
             {lineTwoColon}
             <Text
               tag="span"
-              font="label"
+              font="snippet"
               color="activeTitle"
               className="snippet-orange"
             >
@@ -78,19 +79,19 @@ export default function Home() {
             </Text>
           </Text>
         </Text>
-        <Text tag="span" font="label" color="activeTitle">
+        <Text tag="span" font="snippet" color="activeTitle">
           {lineTwoCloseBracket}
         </Text>
         <Text
           tag="span"
-          font="label"
+          font="snippet"
           color="activeTitle"
           className="snippet-green"
         >
           {downloadCVlabel}
-          <a href="" className="snippet-download">
+          <Text tag="span" font="snippet" color="activeTitle">
             {downloadCVbutton}
-          </a>
+          </Text>
         </Text>
       </Text>
     )
@@ -99,7 +100,7 @@ export default function Home() {
   return (
     <Container>
       <Content>
-        <div className="writer">
+        <section className="writer">
           <div className="writer-top">
             <Text tag="span" font="body" color="fontSecondary">
               {hello}
@@ -122,15 +123,16 @@ export default function Home() {
             </Text>
           </div>
           <div className="writer-bottom">
-            <Text tag="span" font="label" color="fontPrimary">
+            <Text tag="span" font="snippet" color="fontPrimary">
               {infoText1}
             </Text>
-            <Text tag="span" font="label" color="fontPrimary">
+            <Text tag="span" font="snippet" color="fontPrimary">
               {infoText2}
             </Text>
             {downloadCv && <TextDowload />}
           </div>
-        </div>
+        </section>
+        <SideBox onClickButton={() => setDownloadCV(true)} />
       </Content>
     </Container>
   )

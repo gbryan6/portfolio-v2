@@ -8,11 +8,14 @@ export const Container = styled.main`
 
 export const Content = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+
   width: 100%;
   height: 100%;
+
   padding-left: 31rem;
+  padding-right: 31rem;
 
   font-weight: normal;
   .writer {

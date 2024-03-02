@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const useTypewriter = (text: string, time = 100, delay = 5000) => {
+const useTypewriter = (text: string, time = 100, delay = 0) => {
   const [typedText, setTypedText] = useState('')
 
   useEffect(() => {

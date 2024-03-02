@@ -32,4 +32,15 @@ export const Content = styled.div`
   background-repeat: no-repeat;
   background-position: 90% 50%;
   position: relative;
+  animation: pulse 3s infinite alternate;
+
+  @keyframes pulse {
+  0% {
+    background-size: 52%;
+  }
+  100% {
+    background-size: 56%;
+  }
+}
+
 `
