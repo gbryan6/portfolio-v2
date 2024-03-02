@@ -44,10 +44,12 @@ export const Container = styled(Link)<IButtonProps>`
   }
 
   &:hover {
+    background-color: ${({theme}) => theme.colors.activeBackground};
+
     > p,
     svg {
       color: ${({ theme }) => theme.colors.activeTitle};
-      transition: 0.4s ease-in;
+      transition: 0.2s ease-in;
     }
   }
 

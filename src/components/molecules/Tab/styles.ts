@@ -6,6 +6,7 @@ interface ITabStyleProps {
 }
 
 export const Container = styled.li<ITabStyleProps>`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,9 +28,12 @@ export const Container = styled.li<ITabStyleProps>`
   }
 
   .tab-button_close {
-    display: flex;
+    display: ${({ active }) => active ? "flex": "none"};
     align-items: center;
     justify-content: center;
+
+    position: absolute;
+    right: 1.1rem;
 
     border-radius: 0.2rem;
 
@@ -46,6 +50,10 @@ export const Container = styled.li<ITabStyleProps>`
   }
 
   &:hover {
+    .tab-button_close {
+      display: flex;
+    }
+
     p {
       color: ${({ theme }) => theme.colors.activeTitle};
     }
