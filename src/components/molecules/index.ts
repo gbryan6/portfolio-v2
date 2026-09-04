@@ -1,7 +1,6 @@
-import NavButton from "../molecules/NavButton";
-import SnakeGame from "./SnakeGame";
+import NavButton from './NavButton'
+import SnakeGame from './SnakeGame'
+import ProjectCard from './ProjectCard'
+import ProjectsEmptyState from './ProjectsEmptyState'
 
-export {
-  NavButton,
-  SnakeGame,
-}
+export { NavButton, SnakeGame, ProjectCard, ProjectsEmptyState }

@@ -11,8 +11,10 @@ export const Container = styled.label`
 
     &:checked {
       + span {
-        background-color: ${({ theme }) => theme.colors.fontPrimary};
-        > svg {
+        background-color: ${({ theme }) => theme.colors.accent};
+        border-color: ${({ theme }) => theme.colors.accent};
+
+        svg {
           color: ${({ theme }) => theme.colors.activeTitle};
         }
       }
@@ -33,5 +35,8 @@ export const Container = styled.label`
     height: 1.8rem;
 
     background-color: ${({ theme }) => theme.colors.backgroundContent};
+
+    transition: background-color var(--motion-fast) ease,
+      border-color var(--motion-fast) ease;
   }
 `

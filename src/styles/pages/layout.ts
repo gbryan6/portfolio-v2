@@ -11,7 +11,7 @@ export const Container = styled.div`
   min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.background};
   padding: 2.8rem;
-  
+  transition: background-color var(--motion-base) ease;
 `
 export const Content = styled.div`
   flex: 1;
@@ -25,22 +25,24 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
 
-  /* max-width: 2400px;
-  max-height: 1200px; */
-
   background-image: url(${backgroundImage.src});
   background-repeat: no-repeat;
   background-position: 90% 50%;
   position: relative;
   animation: pulse 3s infinite alternate;
+  transition: background-color var(--motion-base) ease,
+    border-color var(--motion-base) ease, color var(--motion-base) ease;
 
   @keyframes pulse {
-  0% {
-    background-size: 52%;
+    0% {
+      background-size: 52%;
+    }
+    100% {
+      background-size: 56%;
+    }
   }
-  100% {
-    background-size: 56%;
-  }
-}
 
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const Container = styled.aside`
   grid-area: SN;
@@ -19,27 +19,36 @@ export const Container = styled.aside`
     border-right: 1px solid ${({ theme }) => theme.colors.line};
     padding: 2rem 0;
 
-    .side-nav_left-button{
+    .side-nav_left-button {
+      position: relative;
       display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 0.6rem;
       cursor: pointer;
-    }
 
-    .side-nav_left-button:hover{
-      svg{
-        color: ${({ theme }) => theme.colors.activeTitle};
+      > svg {
+        position: relative;
+        z-index: 1;
+        width: 2rem;
+        height: 2rem;
+        color: ${({ theme }) => theme.colors.fontPrimary};
+        transition: color var(--motion-fast) ease;
       }
     }
 
-    .side-nav_left-button.active{
-      svg{
-        color: ${({ theme }) => theme.colors.activeTitle};
-      }
+    .side-nav_left-button:hover > svg,
+    .side-nav_left-button.active > svg {
+      color: ${({ theme }) => theme.colors.activeTitle};
     }
 
-    svg {
-      width: 2rem;
-      height: 2rem;
-      color: ${({ theme }) => theme.colors.fontPrimary};
+    .side-nav_left-indicator {
+      position: absolute;
+      inset: 0;
+      border-radius: 0.6rem;
+      background-color: ${({ theme }) => theme.colors.activeBackground};
     }
   }
 

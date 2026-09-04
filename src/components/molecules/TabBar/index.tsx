@@ -1,20 +1,22 @@
 import { Container } from './styles'
 import Tab from '../Tab'
 import { Tab as TabType } from '@/hooks/Tabs'
+import { Presence } from '@/components/motion'
 
-interface ITabBar {
+interface ITabBarProps {
   tabs?: TabType[]
-  children?: React.ReactNode 
+  children?: React.ReactNode
 }
 
-export default function TabBar({ tabs, children }: ITabBar) {
+export default function TabBar({ tabs, children }: ITabBarProps) {
   return (
     <Container>
-      {tabs &&
-        tabs.map((tab) => {
-          return <Tab tabData={tab} key={tab.id} />
-        })}
-        {children}
+      <Presence initial={false}>
+        {tabs?.map((tab) => (
+          <Tab key={tab.id} tabData={tab} />
+        ))}
+      </Presence>
+      {children}
     </Container>
   )
 }

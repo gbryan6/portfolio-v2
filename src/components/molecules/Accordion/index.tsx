@@ -1,20 +1,38 @@
-import React, { useState } from 'react'
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'motion/react'
 
 import { Container } from './styles'
 import { Text } from '@/components/atoms'
 import { IoMdArrowDropdown } from 'react-icons/io'
+import { Presence, useMotionPreset, variants } from '@/components/motion'
 
 interface IAccordionProps {
   children: React.ReactNode
   title: string
+  defaultOpen?: boolean
 }
 
-export default function Accordion({ children, title }: IAccordionProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(true)
+export default function Accordion({
+  children,
+  title,
+  defaultOpen = true,
+}: IAccordionProps) {
+  const [isOpen, setIsOpen] = useState(defaultOpen)
+  const collapse = useMotionPreset('collapse')
+  const arrow = useMotionPreset('snappy')
+
   return (
-    <Container isOpen={isOpen}>
-      <div className="accordion-head" onClick={() => setIsOpen(!isOpen)}>
-        <IoMdArrowDropdown />
+    <Container $isOpen={isOpen}>
+      <div className="accordion-head" onClick={() => setIsOpen((v) => !v)}>
+        <motion.span
+          className="accordion-arrow"
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={arrow}
+        >
+          <IoMdArrowDropdown />
+        </motion.span>
         <Text
           tag="span"
           font="label"
@@ -23,7 +41,23 @@ export default function Accordion({ children, title }: IAccordionProps) {
           {title}
         </Text>
       </div>
-      <div className="accordion-content">{children}</div>
+
+      <Presence initial={false}>
+        {isOpen && (
+          <motion.div
+            key="content"
+            className="accordion-content"
+            variants={variants.collapse}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            transition={collapse}
+            style={{ overflow: 'hidden' }}
+          >
+            <div className="accordion-content_inner">{children}</div>
+          </motion.div>
+        )}
+      </Presence>
     </Container>
   )
 }

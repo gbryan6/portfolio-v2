@@ -1,17 +1,17 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components'
 
-interface IIcontextStylesProps {
-  active?: boolean
+interface IIconTextStyleProps {
+  $active?: boolean
 }
 
-export const Container = styled.div<IIcontextStylesProps>`
+export const Container = styled.div<IIconTextStyleProps>`
   display: flex;
   align-items: center;
 
   width: 100%;
-  
+
   cursor: pointer;
-  
+
   overflow: hidden;
 
   > svg {
@@ -19,18 +19,27 @@ export const Container = styled.div<IIcontextStylesProps>`
     width: 1.5rem;
     height: 1.5rem;
     margin-right: 0.8rem;
-    color: #81A1C1;
+    color: #81a1c1;
+    transition: color var(--motion-fast) ease;
+  }
+
+  span {
+    transition: color var(--motion-fast) ease;
   }
 
   &:hover {
-    span, svg {
+    span,
+    svg {
       color: ${({ theme }) => theme.colors.activeTitle};
     }
   }
 
-  ${({active}) => active && css`
-    span, svg {
+  ${({ $active }) =>
+    $active &&
+    css`
+      span,
+      svg {
         color: ${({ theme }) => theme.colors.activeTitle};
       }
-  `}
+    `}
 `

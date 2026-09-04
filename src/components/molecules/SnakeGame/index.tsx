@@ -3,6 +3,8 @@
 /* eslint-disable @next/next/no-img-element -- decorative local SVGs, no optimization needed */
 
 import { useEffect, useRef, useState } from 'react'
+import { useReducedMotion } from 'motion/react'
+import type { Variants } from 'motion/react'
 import {
   IoIosArrowUp,
   IoIosArrowDown,
@@ -11,6 +13,7 @@ import {
 } from 'react-icons/io'
 
 import { Text } from '@/components/atoms'
+import { Presence, useMotionPreset, motionTokens } from '@/components/motion'
 import {
   Board,
   Cell,
@@ -201,8 +204,19 @@ export default function SnakeGame({ onFinish }: ISnakeGame) {
       : null
   const buttonLabel = status === 'idle' ? 'start-game' : 'jogar-de-novo'
 
+  const prefersReduced = useReducedMotion()
+  const overlayEnter = useMotionPreset('enter')
+  const overlayExit = useMotionPreset('fast')
+  const overlayVariants: Variants = {
+    hidden: { opacity: 0, x: 6 },
+    show: { opacity: 1, x: 0, transition: overlayEnter },
+    exit: { opacity: 0, x: -6, transition: overlayExit },
+  }
+  const foodPulsing =
+    !prefersReduced && (status === 'idle' || status === 'running')
+
   return (
-    <Container className="slide-in">
+    <Container>
       <img className="bolt bolt--tl" src="/assets/application/bolt-up-left.svg" alt="" />
       <img className="bolt bolt--tr" src="/assets/application/bolt-up-left.svg" alt="" />
       <img className="bolt bolt--bl" src="/assets/application/bolt-up-left.svg" alt="" />
@@ -229,22 +243,41 @@ export default function SnakeGame({ onFinish }: ISnakeGame) {
             width: `${100 / COLS}%`,
             height: `${100 / ROWS}%`,
           }}
+          animate={foodPulsing ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+          transition={
+            foodPulsing
+              ? {
+                  duration: motionTokens.ambient.food,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }
+              : { duration: 0 }
+          }
         />
 
-        {status !== 'running' && (
-          <Overlay $center={isEndState}>
-            {overlayMessage && (
-              <Text tag="span" font="snippet" color="accent">
-                {overlayMessage}
-              </Text>
-            )}
-            <StartButton type="button" onClick={start}>
-              <Text tag="span" font="snippet" color="background">
-                {buttonLabel}
-              </Text>
-            </StartButton>
-          </Overlay>
-        )}
+        <Presence mode="wait">
+          {status !== 'running' && (
+            <Overlay
+              key={status}
+              $center={isEndState}
+              variants={overlayVariants}
+              initial="hidden"
+              animate="show"
+              exit="exit"
+            >
+              {overlayMessage && (
+                <Text tag="span" font="snippet" color="accent">
+                  {overlayMessage}
+                </Text>
+              )}
+              <StartButton type="button" onClick={start}>
+                <Text tag="span" font="snippet" color="background">
+                  {buttonLabel}
+                </Text>
+              </StartButton>
+            </Overlay>
+          )}
+        </Presence>
       </Board>
 
       <Side>

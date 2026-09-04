@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import styled, { css, keyframes } from 'styled-components'
+import { motion } from 'motion/react'
+import styled, { css } from 'styled-components'
 
 interface IButtonProps {
   $active?: boolean
@@ -9,16 +10,8 @@ interface IButtonProps {
   $textIcon?: boolean
 }
 
-const growAnimation = keyframes`
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-`;
-
 export const Container = styled(Link)<IButtonProps>`
+  position: relative;
   display: flex;
   height: 100%;
   align-items: center;
@@ -27,6 +20,7 @@ export const Container = styled(Link)<IButtonProps>`
   background-color: transparent;
   text-decoration: none;
   color: inherit;
+  transition: background-color var(--motion-base) ease;
 
   > p {
     position: relative;
@@ -37,19 +31,20 @@ export const Container = styled(Link)<IButtonProps>`
     padding-inline: ${({ $iconOnly }) => ($iconOnly ? '1.5rem' : '3.2rem')};
     border-left: 1px solid ${({ theme }) => theme.colors.line};
     color: ${({ theme }) => theme.colors.fontPrimary};
+    transition: color var(--motion-base) ease;
   }
   > p > svg {
     width: 24px;
     height: 24px;
+    transition: color var(--motion-base) ease;
   }
 
   &:hover {
-    background-color: ${({theme}) => theme.colors.activeBackground};
+    background-color: ${({ theme }) => theme.colors.activeBackground};
 
     > p,
-    svg {
+    > p > svg {
       color: ${({ theme }) => theme.colors.activeTitle};
-      transition: 0.2s ease-in;
     }
   }
 
@@ -68,8 +63,6 @@ export const Container = styled(Link)<IButtonProps>`
           color: ${({ theme }) => theme.colors.fontPrimary};
         }
       }
-
-      p
     `}
 
   ${({ $active }) =>
@@ -78,16 +71,15 @@ export const Container = styled(Link)<IButtonProps>`
       > p {
         color: ${({ theme }) => theme.colors.activeTitle};
       }
-
-      > p::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 3px;
-        background-color: orange;
-        top: 95%;
-        left: 0;
-        animation: ${growAnimation} 0.4s forwards;
-      }
     `}
+`
+
+/** Active-route underline. Shared layoutId makes it glide between nav items. */
+export const NavIndicator = styled(motion.span)`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background-color: ${({ theme }) => theme.colors.highlight};
 `

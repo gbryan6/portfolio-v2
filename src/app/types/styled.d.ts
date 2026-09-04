@@ -13,6 +13,8 @@ export type Theme = {
     line: string,
     accent: string,
     highlight: string,
+    codeEntity: string,
+    codeString: string,
   },
   typograph: {
     head: string,

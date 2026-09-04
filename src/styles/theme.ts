@@ -22,6 +22,8 @@ const dark: Theme = {
     line: '#1E2D3D',
     accent: '#43D9AD',
     highlight: '#FEA55F',
+    codeEntity: '#4D5BCE',
+    codeString: '#7FB0FF',
   },
   typograph: typhograph,
 }
@@ -39,6 +41,8 @@ const light: Theme = {
     line: '#607B96',
     accent: '#43D9AD',
     highlight: '#FEA55F',
+    codeEntity: '#3B3F9E',
+    codeString: '#2F6BD6',
   },
   typograph: typhograph,
 }

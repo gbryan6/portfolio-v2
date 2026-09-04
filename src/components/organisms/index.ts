@@ -1,7 +1,6 @@
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from './Header'
+import Footer from './Footer'
+import SideNav from './SideNav'
+import ProjectGrid from './ProjectGrid'
 
-export {
-  Header,
-  Footer
-}
+export { Header, Footer, SideNav, ProjectGrid }

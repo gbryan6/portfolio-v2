@@ -1,5 +1,8 @@
 'use client'
 
+import { motion } from 'motion/react'
+import type { Variants } from 'motion/react'
+
 import { Container } from '@/styles/pages/aboutMe'
 import { sideNavData } from './_data'
 import { useTabs } from '@/hooks/Tabs'
@@ -7,19 +10,52 @@ import SideNav from '@/components/organisms/SideNav'
 import TabBar from '@/components/molecules/TabBar'
 import NoContentTabs from '@/components/molecules/NoContentTabs'
 import TabContentEditor from '@/components/molecules/TabContentEditor'
-
+import { Presence, useMotionPreset } from '@/components/motion'
 
 export default function AboutMe() {
   const { activeInfo, activeTab, tabs } = useTabs()
-
   const actualNav = sideNavData[activeInfo]
+
+  const enter = useMotionPreset('enter')
+  const exit = useMotionPreset('fast')
+
+  const hasTabs = tabs.length > 0
+  const paneKey = hasTabs ? activeTab?.id ?? 'content' : 'empty'
+
+  const pane: Variants = {
+    hidden: { opacity: 0, x: 8 },
+    show: { opacity: 1, x: 0, transition: enter },
+    exit: { opacity: 0, x: -8, transition: exit },
+  }
 
   return (
     <Container>
       <SideNav sections={actualNav.sections} hasLeft />
-      {tabs.length > 0 && <TabBar tabs={tabs} />}
-      {tabs.length > 0 && <TabContentEditor text={activeTab?.content} />}
-      {tabs.length < 1 && <NoContentTabs />}
+      {hasTabs && <TabBar tabs={tabs} />}
+
+      <Presence mode="wait" initial={false}>
+        <motion.div
+          key={paneKey}
+          style={{
+            gridArea: 'CT',
+            display: 'flex',
+            width: '100%',
+            minWidth: 0,
+            minHeight: 0,
+            overflow: 'hidden',
+          }}
+          variants={pane}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+        >
+          {hasTabs ? (
+            <TabContentEditor text={activeTab?.content} />
+          ) : (
+            <NoContentTabs />
+          )}
+        </motion.div>
+      </Presence>
     </Container>
   )
 }

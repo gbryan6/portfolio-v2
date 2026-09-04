@@ -1,6 +1,7 @@
 'use client'
 
 import styled, { css } from 'styled-components'
+import { motion } from 'motion/react'
 
 /* board = 13 colunas x 25 linhas @ 1.6rem por célula */
 
@@ -82,7 +83,7 @@ export const Cell = styled.div<{ $head?: boolean }>`
   box-shadow: ${({ $head }) => ($head ? '0 0 8px rgba(67, 217, 173, 0.6)' : 'none')};
 `
 
-export const FoodBit = styled.div`
+export const FoodBit = styled(motion.div)`
   position: absolute;
 
   &::after {
@@ -97,7 +98,7 @@ export const FoodBit = styled.div`
   }
 `
 
-export const Overlay = styled.div<{ $center?: boolean }>`
+export const Overlay = styled(motion.div)<{ $center?: boolean }>`
   position: absolute;
   inset: 0;
 

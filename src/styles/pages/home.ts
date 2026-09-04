@@ -16,11 +16,14 @@ export const Content = styled.div`
 
   padding-left: 31rem;
   padding-right: 31rem;
+  column-gap: 1.6rem;
 
   font-weight: normal;
   .writer {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    overflow-wrap: break-word;
     
     .writer-top {
       display: flex;
@@ -46,7 +49,7 @@ export const Content = styled.div`
   }
 
   .snippet-purple {
-    color: #4d5bce;
+    color: ${({ theme }) => theme.colors.codeEntity};
   }
 
   .snippet-green {

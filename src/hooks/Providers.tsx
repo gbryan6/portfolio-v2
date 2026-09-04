@@ -1,19 +1,26 @@
 'use client'
 
 import StyledComponentsRegistry from '@/app/lib/registry'
-import { ThemeSwitcherProvider } from './Theme'
+import { ThemeSwitcherProvider, ThemeName } from './Theme'
 import { TabsProvider } from './Tabs'
 import GlobalStyles from '@/styles/GlobalStyles'
+import { MotionProvider } from '@/components/motion'
 
-const Providers = ({ children }: { children: React.ReactNode }) => {
+const Providers = ({
+  children,
+  initialThemeName,
+}: {
+  children: React.ReactNode
+  initialThemeName?: ThemeName
+}) => {
   return (
     <StyledComponentsRegistry>
       <GlobalStyles />
-      <ThemeSwitcherProvider>
-        <TabsProvider>
-        {children}
-        </TabsProvider>
-      </ThemeSwitcherProvider>
+      <MotionProvider>
+        <ThemeSwitcherProvider initialThemeName={initialThemeName}>
+          <TabsProvider>{children}</TabsProvider>
+        </ThemeSwitcherProvider>
+      </MotionProvider>
     </StyledComponentsRegistry>
   )
 }

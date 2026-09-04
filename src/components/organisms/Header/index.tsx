@@ -1,14 +1,25 @@
+'use client'
+
 import { Text } from '@/components/atoms'
 import { NavButton } from '@/components/molecules'
 import { usePathname } from 'next/navigation'
 import { RiSunFoggyFill, RiMoonFoggyFill } from 'react-icons/ri'
+import { motion } from 'motion/react'
 
 import { Container } from './styles'
 import { useTheme } from '@/hooks/Theme'
+import { Presence, useMotionPreset } from '@/components/motion'
+
+const ROUTES = [
+  { href: '/', label: '_olá' },
+  { href: '/about-me', label: '_sobre-mim' },
+  { href: '/projects', label: '_projetos' },
+] as const
 
 function Header() {
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
+  const iconTransition = useMotionPreset('snappy')
 
   return (
     <Container>
@@ -16,33 +27,48 @@ function Header() {
         <Text tag="p" font="snippet" color="fontPrimary">
           gabriel-bryan
         </Text>
-        <NavButton href="/" active={pathname == '/'}>
-          <Text tag="p" font="snippet" color="fontPrimary">
-            _olá
-          </Text>
-        </NavButton>
-        <NavButton href="/about-me" active={pathname == '/about-me'}>
-          <Text tag="p" font="snippet" color="fontPrimary">
-            _sobre-mim
-          </Text>
-        </NavButton>
-        <NavButton href="/projects" active={pathname == '/projects'}>
-          <Text tag="p" font="snippet" color="fontPrimary">
-            _projetos
-          </Text>
-        </NavButton>
+
+        {ROUTES.map(({ href, label }) => (
+          <NavButton
+            key={href}
+            href={href}
+            active={pathname === href}
+            showIndicator={pathname === href}
+          >
+            <Text tag="p" font="snippet" color="fontPrimary">
+              {label}
+            </Text>
+          </NavButton>
+        ))}
       </div>
+
       <aside className="right">
         <NavButton href="#" iconOnly onClick={toggleTheme}>
           <Text tag="p" font="snippet" color="fontPrimary">
-            {theme.title == 'light' ? (
-              <RiMoonFoggyFill className="theme" />
-            ) : (
-              <RiSunFoggyFill className="theme" />
-            )}
+            <Presence mode="wait">
+              <motion.span
+                key={theme.title}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={iconTransition}
+                style={{ display: 'inline-flex' }}
+              >
+                {theme.title === 'light' ? (
+                  <RiMoonFoggyFill className="theme" />
+                ) : (
+                  <RiSunFoggyFill className="theme" />
+                )}
+              </motion.span>
+            </Presence>
           </Text>
         </NavButton>
-        <NavButton href="/contact-me" active={pathname == '/contact-me'}>
+
+        <NavButton
+          href="/contact-me"
+          active={pathname === '/contact-me'}
+          showIndicator={pathname === '/contact-me'}
+        >
           <Text tag="p" font="snippet" color="fontPrimary">
             _fale-comigo
           </Text>

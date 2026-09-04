@@ -5,12 +5,13 @@ export const Container = styled.div`
   display: flex;
 
   width: 100%;
-  height: calc(100vh - 206px);
+  min-width: 0;
+  height: var(--editor-content-height);
 
-  
-  overflow-y: scroll;
+  /* long non-wrapping <pre> lines scroll inside the pane, not the page */
+  overflow: auto;
 
-  background-color:  ${({ theme }) => theme.colors.activeBackground};
+  background-color: ${({ theme }) => theme.colors.activeBackground};
 
   &::-webkit-scrollbar {
    width: 1.2rem;           

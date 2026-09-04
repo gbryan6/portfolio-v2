@@ -1,12 +1,14 @@
 import { LinkProps } from 'next/link'
 import { IconBaseProps } from 'react-icons'
-import { Container } from './styles'
+import { Container, NavIndicator } from './styles'
 
-interface ITextProps extends LinkProps {
+interface INavButtonProps extends LinkProps {
   icon?: React.ComponentType<IconBaseProps>
   active?: boolean
   iconOnly?: boolean
   textIcon?: boolean
+  /** renders the shared active-route underline */
+  showIndicator?: boolean
   target?: string
   children?: React.ReactNode
 }
@@ -16,13 +18,20 @@ export default function NavButton({
   active,
   iconOnly,
   textIcon,
+  showIndicator,
   children,
   ...rest
-}: ITextProps) {
+}: INavButtonProps) {
   return (
-    <Container $active={active} $textIcon={textIcon} $iconOnly={iconOnly} {...rest}>
+    <Container
+      $active={active}
+      $textIcon={textIcon}
+      $iconOnly={iconOnly}
+      {...rest}
+    >
       {children}
       {Icon && <Icon size={20} />}
+      {showIndicator && <NavIndicator layoutId="nav-underline" />}
     </Container>
   )
 }
