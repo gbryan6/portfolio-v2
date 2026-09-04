@@ -4,9 +4,9 @@ import Link from 'next/link'
 import styled, { css, keyframes } from 'styled-components'
 
 interface IButtonProps {
-  active?: boolean
-  iconOnly?: boolean
-  textIcon?: boolean
+  $active?: boolean
+  $iconOnly?: boolean
+  $textIcon?: boolean
 }
 
 const growAnimation = keyframes`
@@ -34,7 +34,7 @@ export const Container = styled(Link)<IButtonProps>`
     width: 100%;
     height: 100%;
     align-items: center;
-    padding-inline: ${({ iconOnly }) => (iconOnly ? '1.5rem' : '3.2rem')};
+    padding-inline: ${({ $iconOnly }) => ($iconOnly ? '1.5rem' : '3.2rem')};
     border-left: 1px solid ${({ theme }) => theme.colors.line};
     color: ${({ theme }) => theme.colors.fontPrimary};
   }
@@ -53,8 +53,8 @@ export const Container = styled(Link)<IButtonProps>`
     }
   }
 
-  ${({ textIcon }) =>
-    textIcon &&
+  ${({ $textIcon }) =>
+    $textIcon &&
     css`
       padding-inline: 2.4rem;
       border-left: 1px solid ${({ theme }) => theme.colors.line};
@@ -72,8 +72,8 @@ export const Container = styled(Link)<IButtonProps>`
       p
     `}
 
-  ${({ active }) =>
-    active &&
+  ${({ $active }) =>
+    $active &&
     css`
       > p {
         color: ${({ theme }) => theme.colors.activeTitle};

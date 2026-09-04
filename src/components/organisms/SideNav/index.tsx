@@ -63,8 +63,8 @@ function SideNav({ sections, hasLeft = false, children }: ISideNav) {
             const { folders, title } = section
 
             return (
-              <>
-                <Accordion title={title} key={title}>
+              <React.Fragment key={title}>
+                <Accordion title={title}>
                   {folders.map((folder) => {
                     const { tabs } = folder
 
@@ -101,7 +101,7 @@ function SideNav({ sections, hasLeft = false, children }: ISideNav) {
                     className="label-button"
                   />
                 </Accordion>
-              </>
+              </React.Fragment>
             )
           })}
         {children}

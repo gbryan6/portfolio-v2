@@ -1,19 +1,52 @@
 'use client'
 
 import { Text } from '@/components/atoms'
-import SideBox from '@/components/molecules/SideBox'
+import SnakeGame from '@/components/molecules/SnakeGame'
 import useTypewriter from '@/hooks/useTypewriter'
 import { Container, Content } from '@/styles/pages/home'
 import { useState } from 'react'
 
+const CV_URL = 'https://gbryandev.com.br/curriculo'
+
 export default function Home() {
   const [downloadCv, setDownloadCV] = useState(false)
+  const [cvReason, setCvReason] = useState<'skip' | 'won' | null>(null)
 
   const hello = useTypewriter('Olá 👋. Eu sou', 50, 0)
   const name = useTypewriter('Gabriel Bryan', 50, 700)
   const role = useTypewriter('> Front-end developer', 50, 1400)
-  const infoText1 = useTypewriter('// Pressione o botão', 50, 2550)
-  const infoText2 = useTypewriter('// para baixar o meu curriculo.', 50, 3950)
+  const infoText1 = useTypewriter(
+    '// Vença a cobrinha comendo todas as frutas',
+    50,
+    2550
+  )
+  const infoText2 = useTypewriter(
+    '// ou aperte "skip" para baixar o meu curriculo.',
+    50,
+    3950
+  )
+
+  function handleFinish(reason: 'skip' | 'won') {
+    setCvReason(reason)
+    setDownloadCV(true)
+    window.open(CV_URL, '_blank', 'noopener,noreferrer')
+  }
+
+  function CvNote() {
+    const note = useTypewriter(
+      cvReason === 'won'
+        ? '// Boa! Você zerou o jogo — currículo liberado 🎉'
+        : '// Beleza, aqui está o meu currículo 👇',
+      50,
+      0
+    )
+
+    return (
+      <Text tag="span" font="snippet" color="fontPrimary">
+        {note}
+      </Text>
+    )
+  }
 
   function TextDowload() {
     const lineOneType = useTypewriter('const ', 50, 0)
@@ -23,7 +56,7 @@ export default function Home() {
     const lineTwoAttribute = useTypewriter('download', 50, 450)
     const lineTwoColon = useTypewriter(': ', 50, 1050)
     const lineTwoString = useTypewriter(
-      '() => “gbryandev.com.br/curriculo”,',
+      '() => "gbryandev.com.br/curriculo",',
       50,
       1150
     )
@@ -129,10 +162,15 @@ export default function Home() {
             <Text tag="span" font="snippet" color="fontPrimary">
               {infoText2}
             </Text>
-            {downloadCv && <TextDowload />}
+            {downloadCv && (
+              <>
+                <CvNote />
+                <TextDowload />
+              </>
+            )}
           </div>
         </section>
-        <SideBox onClickButton={() => setDownloadCV(true)} />
+        <SnakeGame onFinish={handleFinish} />
       </Content>
     </Container>
   )

@@ -11,6 +11,8 @@ export type Theme = {
     fontPrimary: string,
     fontSecondary: string,
     line: string,
+    accent: string,
+    highlight: string,
   },
   typograph: {
     head: string,

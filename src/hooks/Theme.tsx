@@ -27,16 +27,27 @@ export function ThemeSwitcherProvider({
   function toggleTheme() {
     const targetTheme = theme.title === 'dark' ? light : dark
     setTheme(targetTheme)
-    localStorage.setItem('theme', JSON.stringify(targetTheme))
+    // Persiste só o nome do tema — nunca o objeto serializado.
+    // Guardar o objeto inteiro "congela" a paleta: quando novas cores são
+    // adicionadas em theme.ts, visitantes com valor antigo no localStorage
+    // recebem tokens `undefined` no primeiro carregamento.
+    localStorage.setItem('theme', targetTheme.title)
   }
 
   useEffect(() => {
-    const storageValue = localStorage.getItem('theme')
-    if (storageValue) {
-      setTheme(JSON.parse(storageValue))
-    } else {
-      setTheme(INITIAL_STATE)
+    const stored = localStorage.getItem('theme')
+    if (!stored) return
+
+    let title = stored
+    try {
+      // tolera valores legados que guardaram o objeto de tema inteiro
+      const parsed = JSON.parse(stored)
+      title = parsed?.title ?? stored
+    } catch {
+      // valor já é o nome do tema em texto puro
     }
+
+    setTheme(title === 'light' ? light : dark)
   }, [])
 
   return (

@@ -20,6 +20,8 @@ const dark: Theme = {
     fontPrimary: '#607B96',
     fontSecondary: '#E5E9F0',
     line: '#1E2D3D',
+    accent: '#43D9AD',
+    highlight: '#FEA55F',
   },
   typograph: typhograph,
 }
@@ -35,6 +37,8 @@ const light: Theme = {
     fontPrimary: '#607B96',
     fontSecondary: '#505A64',
     line: '#607B96',
+    accent: '#43D9AD',
+    highlight: '#FEA55F',
   },
   typograph: typhograph,
 }
