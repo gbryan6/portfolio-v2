@@ -1,6 +1,7 @@
 'use client'
 
 import { Footer, Header} from '@/components/organisms/'
+import { DotBackground } from '@/components/atoms'
 
 import { Container, Content } from '@/styles/pages/layout'
 
@@ -12,6 +13,7 @@ export default function AppLayout({
   return (
     <Container>
       <Content>
+        <DotBackground />
         <Header />
         {children}
         <Footer />

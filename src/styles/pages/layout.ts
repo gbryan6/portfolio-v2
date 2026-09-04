@@ -1,7 +1,6 @@
 'use client'
 
 import styled from 'styled-components'
-import backgroundImage from '/public/background_blurs.png'
 
 export const Container = styled.div`
   display: flex;
@@ -25,24 +24,9 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
 
-  background-image: url(${backgroundImage.src});
-  background-repeat: no-repeat;
-  background-position: 90% 50%;
   position: relative;
-  animation: pulse 3s infinite alternate;
+  z-index: 0;
+  overflow: hidden;
   transition: background-color var(--motion-base) ease,
     border-color var(--motion-base) ease, color var(--motion-base) ease;
-
-  @keyframes pulse {
-    0% {
-      background-size: 52%;
-    }
-    100% {
-      background-size: 56%;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 `
