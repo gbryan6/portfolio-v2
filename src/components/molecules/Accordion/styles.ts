@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { media } from '@/styles/breakpoints'
 
 interface IAccordionStyleProps {
   $isOpen: boolean
@@ -50,5 +51,17 @@ export const Container = styled.div<IAccordionStyleProps>`
 
   .label-button {
     margin-bottom: 0.8rem;
+  }
+
+  /*
+   * Stacked layout: the heads become full-width tap targets, so they get a
+   * resting surface to sit on. buttonColor is the token for exactly that and
+   * carries its own dark/light pair — grey-blue on dark, grey on light.
+   */
+  ${media.tablet} {
+    .accordion-head {
+      background-color: ${({ theme }) => theme.colors.buttonColor};
+      transition: background-color var(--motion-base) ease;
+    }
   }
 `

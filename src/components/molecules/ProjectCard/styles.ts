@@ -18,7 +18,7 @@ export const Heading = styled.h3`
 
 export const CardBody = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.line};
-  border-radius: 0.8rem;
+  border-radius: 1.6rem;
 
   background-color: ${({ theme }) => theme.colors.activeBackground};
 
@@ -30,7 +30,14 @@ export const CardBody = styled.div`
 export const Thumb = styled.div`
   position: relative;
   width: 100%;
+
+  /*
+   * 16/9 drives the height until the card gets wide enough to exceed 200px,
+   * where max-height takes over. The <Image> inside is object-fit: cover, so it
+   * keeps its own proportions and crops instead of stretching.
+   */
   aspect-ratio: 16 / 9;
+  max-height: 20rem;
 `
 
 export const Badge = styled.div`
@@ -59,7 +66,7 @@ export const Body = styled.div`
   flex-direction: column;
   gap: 1.6rem;
 
-  padding: 1.6rem 2rem;
+  padding: 3.2rem;
 
   .desc {
     display: -webkit-box;
@@ -67,17 +74,6 @@ export const Body = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-`
-
-export const Pill = styled(motion.a)`
-  align-self: flex-start;
-
-  background-color: ${({ theme }) => theme.colors.buttonColor};
-  border-radius: 999rem;
-
-  padding: 0.8rem 1.6rem;
-
-  text-decoration: none;
 `
 
 export const Container = styled(motion.article)`

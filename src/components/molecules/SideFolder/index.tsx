@@ -13,19 +13,28 @@ interface ISideFolderProps {
   title: string
   color: string
   children: React.ReactNode
+  onToggle?: (isOpen: boolean) => void
 }
 
 export default function SideFolder({
   title = 'teste',
   color = 'red',
   children,
+  onToggle,
 }: ISideFolderProps) {
   const [isOpen, setIsOpen] = useState(false)
   const collapse = useMotionPreset('collapse')
 
+  const handleToggle = () => {
+    setIsOpen((v) => {
+      onToggle?.(!v)
+      return !v
+    })
+  }
+
   return (
     <Container $color={color}>
-      <div className="side-folder_head" onClick={() => setIsOpen((v) => !v)}>
+      <div className="side-folder_head" onClick={handleToggle}>
         {isOpen ? <HiFolderOpen /> : <HiFolder />}
         <Text
           font="label"

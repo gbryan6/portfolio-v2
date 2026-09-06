@@ -4,12 +4,13 @@ import { forwardRef } from 'react'
 import Image from 'next/image'
 
 import { Text } from '@/components/atoms'
+import Button from '@/components/molecules/Button'
 import { useMotionPreset, variants } from '@/components/motion'
 import {
   Project,
   techById,
 } from '@/app/(main)/(routes)/projects/_data'
-import { Container, Heading, CardBody, Thumb, Badge, Body, Pill } from './styles'
+import { Container, Heading, CardBody, Thumb, Badge, Body } from './styles'
 
 interface IProjectCardProps {
   project: Project
@@ -30,13 +31,13 @@ const ProjectCard = forwardRef<HTMLElement, IProjectCardProps>(
         transition={snappy}
       >
         <Heading>
-          <Text tag="span" font="body" color="codeEntity" className="n">
+          <Text tag="span" font="label" color="codeEntity" className="n">
             Project {project.index}
           </Text>
-          <Text tag="span" font="body" color="fontPrimary" className="sep">
+          <Text tag="span" font="label" color="fontPrimary" className="sep">
             {'//'}
           </Text>
-          <Text tag="span" font="body" color="codeString" className="slug">
+          <Text tag="span" font="label" color="codeString" className="slug">
             _{project.slug}
           </Text>
         </Heading>
@@ -57,20 +58,17 @@ const ProjectCard = forwardRef<HTMLElement, IProjectCardProps>(
           </Thumb>
 
           <Body>
-            <Text tag="p" font="snippet" color="fontPrimary" className="desc">
+            <Text tag="p" font="body" color="fontPrimary" className="desc">
               {project.description}
             </Text>
-            <Pill
+            <Button
+             
               href={project.href}
               target="_blank"
               rel="noopener noreferrer"
-              whileTap={{ scale: 0.97 }}
-              transition={snappy}
             >
-              <Text tag="span" font="snippet" color="activeTitle">
-                view-project
-              </Text>
-            </Pill>
+              view-project
+            </Button>
           </Body>
         </CardBody>
       </Container>

@@ -9,6 +9,10 @@ interface ITextProps {
   font: keyof Theme['typograph']
   color: keyof Theme['colors']
   className?: string
+  /** Passthrough attributes for the rendered element (labels, aria wiring…). */
+  id?: string
+  htmlFor?: string
+  'aria-live'?: 'off' | 'polite' | 'assertive'
 }
 
 type StyledTextProps = {
@@ -17,7 +21,13 @@ type StyledTextProps = {
 }
 
 type StyledText = React.ComponentType<
-  StyledTextProps & { className?: string; children?: React.ReactNode }
+  StyledTextProps & {
+    className?: string
+    children?: React.ReactNode
+    id?: string
+    htmlFor?: string
+    'aria-live'?: 'off' | 'polite' | 'assertive'
+  }
 >
 
 const make = (tag: keyof JSX.IntrinsicElements): StyledText =>

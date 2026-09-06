@@ -12,6 +12,7 @@ export type PresetName =
   | 'routeEnter'
   | 'fast'
   | 'base'
+  | 'wave'
 
 const PRESETS: Record<PresetName, Transition> = {
   enter: spring.enter,
@@ -22,6 +23,7 @@ const PRESETS: Record<PresetName, Transition> = {
   routeEnter,
   fast: tween.fast,
   base: tween.base,
+  wave: tween.wave,
 }
 
 /**

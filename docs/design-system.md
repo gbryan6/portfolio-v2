@@ -124,7 +124,41 @@ export const Container = styled.div`
 
 `theme` é tipado (via o augment em `styled.d.ts`) — o autocomplete lista as chaves válidas.
 
-### 3.3 Proibido
+### 3.3 Botão e campo → primitivas únicas
+
+Dois componentes cobrem **toda** ação e entrada do site. Não crie um `styled.button`
+ou `styled.input` novo — estenda estes.
+
+`molecules/Button` — `variant` `solid` (caixa com borda: formulários, ações) ou
+`pill` (chip arredondado: `view-project`). Passar `href` renderiza `<a>`, senão
+`<button>`. `whileTap` + preset `snappy` já vêm de fábrica. A borda existe sempre
+(transparente no `pill`), então o hover nunca desloca o layout em 1px.
+
+```tsx
+<Button onClick={onClear}>limpar-filtro</Button>
+<Button variant="pill" href={href} target="_blank" rel="noopener noreferrer">view-project</Button>
+<Button id="submit-message" type="submit" disabled={sending} color="fontPrimary">enviar-mensagem</Button>
+```
+
+`molecules/Input` — label + campo + slot de erro (altura reservada, então a
+mensagem não empurra o resto). `multiline` troca `<input>` por `<textarea>`.
+
+O **label é uma configuração de `Text`**, não uma string solta — o call site
+reestiliza sem o componente ganhar uma prop nova a cada pedido. Omitir
+`font`/`color` reproduz o visual padrão de formulário (`label` / `fontPrimary`):
+
+```tsx
+<Input id="name" label={{ text: '_nome:' }} … />
+<Input id="name" label={{ text: 'Nome', font: 'body', color: 'fontSecondary' }} … />
+```
+
+`Button` também expõe `font`/`color` para o rótulo pela mesma razão.
+
+> Ambos são **moléculas**, não átomos: compõem o átomo `Text` (§1 — átomo é o que
+> não depende de outro componente). É por isso que `Checkbox` pode ser átomo — ele
+> não renderiza texto.
+
+### 3.4 Proibido
 
 - Hex/rgb/hsl literais no lugar de um token existente.
 - `px` para tamanhos (use `rem`).
@@ -330,5 +364,6 @@ Dados estáticos por página ficam em `_data.tsx` co-locado (prefixo `_` para o 
 | `TabContentEditor/styles.ts` `height: calc(100vh - 206px)` mágico | — | ✅ Resolvido — `var(--editor-content-height)` |
 | `styles/pages/home.ts` | `.snippet-green` / `-orange` / `-red` com hex literais | Aberto — tokens de "syntax highlight" (`.snippet-purple` já virou `codeEntity`) |
 | `IconText/styles.ts` `#81A1C1`; `Tab/styles.ts` `#ea4835` | hex soltos | Aberto — tokenizar |
+| `atoms/Checkbox` | `input` com `display: none` + `readOnly`, e `TechCheckbox` com `onClick` no wrapper — o clique na caixa disparava 2× (clique direto + clique sintético que o `<label>` manda pro input) e se anulava; o input também não era alcançável por teclado | ✅ Resolvido — input real, controlado, invisível mas focável por cima da caixa; a linha inteira é o `<label>` e o `onChange` do input é o único handler |
 | `theme.ts` `light.background` = `#616161` | Cinza destoa da paleta | Aberto — revisar contraste do tema claro |
 | Rotas viraram `λ` dynamic | `cookies()` no root layout (SSR seed do tema) | Aceito — troca consciente para eliminar o flash de tema |

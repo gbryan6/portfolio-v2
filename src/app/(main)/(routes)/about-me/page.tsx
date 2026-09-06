@@ -1,9 +1,8 @@
 'use client'
 
-import { motion } from 'motion/react'
 import type { Variants } from 'motion/react'
 
-import { Container } from '@/styles/pages/aboutMe'
+import { Container, ContentPane } from '@/styles/pages/aboutMe'
 import { sideNavData } from './_data'
 import { useTabs } from '@/hooks/Tabs'
 import SideNav from '@/components/organisms/SideNav'
@@ -13,7 +12,7 @@ import TabContentEditor from '@/components/molecules/TabContentEditor'
 import { Presence, useMotionPreset } from '@/components/motion'
 
 export default function AboutMe() {
-  const { activeInfo, activeTab, tabs } = useTabs()
+  const { activeInfo, activeTab, tabs, isDraggingFile } = useTabs()
   const actualNav = sideNavData[activeInfo]
 
   const enter = useMotionPreset('enter')
@@ -34,16 +33,10 @@ export default function AboutMe() {
       {hasTabs && <TabBar tabs={tabs} />}
 
       <Presence mode="wait" initial={false}>
-        <motion.div
+        <ContentPane
           key={paneKey}
-          style={{
-            gridArea: 'CT',
-            display: 'flex',
-            width: '100%',
-            minWidth: 0,
-            minHeight: 0,
-            overflow: 'hidden',
-          }}
+          data-drop-zone="tab-area"
+          $dropTarget={isDraggingFile}
           variants={pane}
           initial="hidden"
           animate="show"
@@ -54,7 +47,7 @@ export default function AboutMe() {
           ) : (
             <NoContentTabs />
           )}
-        </motion.div>
+        </ContentPane>
       </Presence>
     </Container>
   )

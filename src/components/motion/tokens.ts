@@ -15,10 +15,12 @@ export const spring: Record<'enter' | 'layout' | 'snappy', Transition> = {
 }
 
 /** Opacity / colour / auto-height / exits — anything that should not overshoot. */
-export const tween: Record<'fast' | 'base' | 'slow', Transition> = {
+export const tween: Record<'fast' | 'base' | 'slow' | 'wave', Transition> = {
   fast: { duration: 0.15, ease: 'easeOut' },
   base: { duration: 0.25, ease: 'easeOut' },
   slow: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+  /** One-shot arm-wave gesture (Astronaut) — a multi-keyframe rotate, which springs can't animate. */
+  wave: { duration: 0.9, ease: 'easeInOut' },
 }
 
 /** Route entrance — a near-alias of `fast`, used only by (main)/template.tsx. */

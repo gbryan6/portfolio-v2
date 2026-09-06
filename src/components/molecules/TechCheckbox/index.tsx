@@ -1,9 +1,10 @@
-import { useState } from 'react'
+'use client'
+
+import { IconType } from 'react-icons'
 
 import Checkbox from '@/components/atoms/Checkbox'
-import { Container } from './styles'
 import IconText from '../IconText'
-import { IconType } from 'react-icons'
+import { Container } from './styles'
 
 interface ITechCheckbox {
   id: string
@@ -18,17 +19,22 @@ interface ITechCheckBoxProps {
 }
 
 function TechCheckbox({ techCheckboxData, onChangeValue }: ITechCheckBoxProps) {
-  const { icon, techName, selected } = techCheckboxData
+  const { id, icon, techName, selected } = techCheckboxData
+  const inputId = `checkbox-${id}`
 
-  const handleChange = () => {
-    if (onChangeValue) {
-      onChangeValue(techCheckboxData)
-    }
-  }
-
+  /*
+   * The row is the input's <label>, so the box, the icon and the name all
+   * activate the same control. The input's own onChange is the only handler —
+   * a click listener up here would double-fire on every label activation.
+   */
   return (
-    <Container onClick={() => handleChange()}>
-      <Checkbox checked={selected} checkboxId={techName} />
+    <Container htmlFor={inputId}>
+      <Checkbox
+        id={inputId}
+        checked={selected}
+        onChange={() => onChangeValue?.(techCheckboxData)}
+      />
+
       <IconText
         text={techName}
         icon={icon}

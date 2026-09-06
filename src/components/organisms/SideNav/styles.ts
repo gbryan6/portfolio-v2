@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { media } from '@/styles/breakpoints'
 
 export const Container = styled.aside`
   grid-area: SN;
@@ -58,5 +59,37 @@ export const Container = styled.aside`
     width: 100%;
     overflow: hidden;
     height: 100%;
+  }
+
+  /*
+   * Stacked layout: the dev/hobbies rail lies down into a row above the
+   * accordions, and the whole aside stops being a fixed-height column so the
+   * page can scroll past it into the content.
+   */
+  ${media.tablet} {
+    flex-direction: column;
+    height: auto;
+
+    border-right: none;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.line};
+
+    .side-nav_left {
+      flex-direction: row;
+      justify-content: flex-start;
+      column-gap: 1.2rem;
+      row-gap: 0;
+
+      width: 100%;
+      height: auto;
+      padding: 0.8rem 1.2rem;
+
+      border-right: none;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.line};
+    }
+
+    .side-nav_right {
+      height: auto;
+      overflow: visible;
+    }
   }
 `

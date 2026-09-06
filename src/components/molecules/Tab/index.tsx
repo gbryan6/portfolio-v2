@@ -1,3 +1,4 @@
+import { Reorder } from 'motion/react'
 import { Text } from '@/components/atoms'
 import { Container, ActiveMarker } from './styles'
 import { Tab as TabType, useTabs } from '@/hooks/Tabs'
@@ -9,9 +10,11 @@ interface ITabProps {
   noAction?: boolean
   /** when provided, the close 'x' calls this instead of the global removeTab */
   onClose?: () => void
+  /** renders as a Reorder.Item so it can be drag-reordered inside a Reorder.Group (TabBar) */
+  reorderable?: boolean
 }
 
-export default function Tab({ tabData, noAction, onClose }: ITabProps) {
+export default function Tab({ tabData, noAction, onClose, reorderable }: ITabProps) {
   const { setActiveTab, removeTab } = useTabs()
   const transition = useMotionPreset('layout')
 
@@ -23,8 +26,16 @@ export default function Tab({ tabData, noAction, onClose }: ITabProps) {
     else removeTab(tabData.id)
   }
 
+  // styled-components' `as` swap lets the same Tab styling render either as a
+  // plain motion.li (projects page's standalone summary tab) or a Reorder.Item
+  // (TabBar) without duplicating the component.
+  const reorderProps = reorderable
+    ? { as: Reorder.Item as React.ElementType, value: tabData.id }
+    : {}
+
   return (
     <Container
+      {...reorderProps}
       $active={tabData.active}
       $noAction={noAction}
       onClick={() => setActiveTab(tabData.id)}

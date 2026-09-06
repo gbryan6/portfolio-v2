@@ -23,6 +23,10 @@ type TabsContextType = {
   setActiveInfo: (info: 'dev' | 'hobbies') => void
   addTab: (newTab: Tab) => void
   removeTab: (tabId: string) => void
+  reorderTabs: (orderedIds: string[]) => void
+  /** True while a file is being dragged from the sidebar towards the tab/content drop zone. */
+  isDraggingFile: boolean
+  setDraggingFile: (value: boolean) => void
 }
 
 interface ITabsContextProvider {
@@ -34,6 +38,7 @@ const TabsContext = createContext<TabsContextType>({} as TabsContextType)
 export const TabsProvider: React.FC<ITabsContextProvider> = ({ children }) => {
   const [tabs, setTabs] = useState<Tab[]>([])
   const [activeInfo, setActiveInfoState] = useState<'dev' | 'hobbies'>('dev')
+  const [isDraggingFile, setDraggingFile] = useState(false)
 
   const setActiveTab = useCallback((tabId: string) => {
     setTabs((prev) => prev.map((tab) => ({ ...tab, active: tab.id === tabId })))
@@ -72,6 +77,16 @@ export const TabsProvider: React.FC<ITabsContextProvider> = ({ children }) => {
     })
   }, [])
 
+  const reorderTabs = useCallback((orderedIds: string[]) => {
+    setTabs((prev) => {
+      const byId = new Map(prev.map((tab) => [tab.id, tab]))
+      const next = orderedIds
+        .map((id) => byId.get(id))
+        .filter((tab): tab is Tab => Boolean(tab))
+      return next.length === prev.length ? next : prev
+    })
+  }, [])
+
   const activeTab = useMemo(() => tabs.find((tab) => tab.active), [tabs])
 
   const value = useMemo(
@@ -83,8 +98,21 @@ export const TabsProvider: React.FC<ITabsContextProvider> = ({ children }) => {
       setActiveInfo,
       addTab,
       removeTab,
+      reorderTabs,
+      isDraggingFile,
+      setDraggingFile,
     }),
-    [tabs, activeInfo, activeTab, setActiveTab, setActiveInfo, addTab, removeTab]
+    [
+      tabs,
+      activeInfo,
+      activeTab,
+      setActiveTab,
+      setActiveInfo,
+      addTab,
+      removeTab,
+      reorderTabs,
+      isDraggingFile,
+    ]
   )
 
   return <TabsContext.Provider value={value}>{children}</TabsContext.Provider>

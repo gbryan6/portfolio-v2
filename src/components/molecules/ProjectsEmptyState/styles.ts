@@ -12,22 +12,10 @@ export const Container = styled.div`
   row-gap: 1.2rem;
   text-align: center;
   padding: 2.4rem;
-`
 
-export const ClearButton = styled.button`
-  margin-top: 0.8rem;
-
-  border: 1px solid ${({ theme }) => theme.colors.line};
-  border-radius: 0.8rem;
-
-  background-color: ${({ theme }) => theme.colors.buttonColor};
-
-  padding: 0.9rem 2rem;
-
-  cursor: pointer;
-  transition: border-color var(--motion-fast) ease;
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.accent};
+  /* Button aligns itself to flex-start by default; centre it in this column. */
+  .empty-state_action {
+    align-self: center;
+    margin-top: 0.8rem;
   }
 `

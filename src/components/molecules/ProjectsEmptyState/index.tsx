@@ -1,5 +1,6 @@
 import { Text } from '@/components/atoms'
-import { Container, ClearButton } from './styles'
+import Button from '@/components/molecules/Button'
+import { Container } from './styles'
 
 interface IProjectsEmptyStateProps {
   onClear: () => void
@@ -16,11 +17,9 @@ export default function ProjectsEmptyState({
       <Text tag="p" font="body" color="fontPrimary">
         Nenhum projeto usa essa combinação de tecnologias.
       </Text>
-      <ClearButton type="button" onClick={onClear}>
-        <Text tag="span" font="snippet" color="activeTitle">
-          limpar-filtro
-        </Text>
-      </ClearButton>
+      <Button onClick={onClear} className="empty-state_action">
+        limpar-filtro
+      </Button>
     </Container>
   )
 }

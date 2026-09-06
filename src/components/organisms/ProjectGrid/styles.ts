@@ -2,6 +2,7 @@
 
 import styled from 'styled-components'
 import { motion } from 'motion/react'
+import { media } from '@/styles/breakpoints'
 
 export const Container = styled.div`
   grid-area: CT;
@@ -9,7 +10,7 @@ export const Container = styled.div`
   height: var(--editor-content-height);
   overflow-y: auto;
 
-  padding: 2.4rem;
+  padding: 6.4rem;
 
   background-color: ${({ theme }) => theme.colors.backgroundContent};
 
@@ -24,18 +25,31 @@ export const Container = styled.div`
     background-color: ${({ theme }) => theme.colors.fontPrimary};
     border-left: 1px solid ${({ theme }) => theme.colors.line};
   }
+
+  /* Stacked: the page scrolls, so the grid grows instead of scrolling itself. */
+  ${media.tablet} {
+    height: auto;
+    overflow-y: visible;
+    padding: 3.2rem;
+  }
+
+  ${media.mobile} {
+    padding: 2rem 1.6rem;
+  }
 `
 
 export const Grid = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2.4rem;
+  gap: 3.2rem;
 
   @media (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  @media (max-width: 800px) {
+
+  ${media.mobile} {
     grid-template-columns: 1fr;
+    gap: 2.4rem;
   }
 `
 

@@ -1,11 +1,16 @@
 import { Theme } from '@/app/types/styled'
 
+/*
+ * Fluid scale. Every `clamp()` maxes out at the original desktop value, so wide
+ * viewports render exactly as before — only narrow ones scale down. This is why
+ * pages never override a font-size in a media query.
+ */
 const typhograph = {
-  head: '62px',
-  subHead: '32px',
-  pageTitle: '26px',
-  body: '18px',
-  label: '16px',
+  head: 'clamp(4.2rem, 7.5vw, 62px)',
+  subHead: 'clamp(2.2rem, 4vw, 32px)',
+  pageTitle: 'clamp(2rem, 3vw, 26px)',
+  body: 'clamp(1.5rem, 2vw, 18px)',
+  label: 'clamp(1.4rem, 1.6vw, 16px)',
   snippet: '14px',
 }
 

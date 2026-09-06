@@ -2,6 +2,7 @@
 
 import styled, { css } from 'styled-components'
 import { motion } from 'motion/react'
+import { media } from '@/styles/breakpoints'
 
 /* board = 13 colunas x 25 linhas @ 1.6rem por célula */
 
@@ -54,6 +55,21 @@ export const Container = styled.div`
   .bolt--br {
     bottom: 1.1rem;
     right: 1.1rem;
+  }
+
+  /*
+   * 51rem of fixed width cannot survive a phone. The board keeps its 13-column
+   * grid (20.8rem fits even a 320px screen) and the side panel drops beneath it
+   * instead of beside it, so the on-screen d-pad stays reachable with a thumb.
+   */
+  ${media.mobile} {
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+    padding: 2rem 1.6rem;
+    gap: 2rem;
   }
 `
 
@@ -147,6 +163,13 @@ export const Side = styled.aside`
   .food-left {
     display: flex;
     flex-direction: column;
+  }
+
+  ${media.mobile} {
+    width: 100%;
+    flex: initial;
+    padding-block: 0;
+    gap: 1.6rem;
   }
 `
 

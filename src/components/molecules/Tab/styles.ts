@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { motion } from 'motion/react'
+import { media } from '@/styles/breakpoints'
 
 interface ITabStyleProps {
   $active: boolean
@@ -15,6 +16,11 @@ export const Container = styled(motion.li)<ITabStyleProps>`
 
   padding: 0 1.2rem;
   height: 100%;
+
+  /* Stacked: the bar has no height of its own, so the tab sets the row's. */
+  ${media.tablet} {
+    min-height: 4rem;
+  }
 
   border-right: 1px solid ${({ theme }) => theme.colors.line};
   background-color: ${({ $active, theme }) =>
