@@ -1,11 +1,16 @@
 import { Theme } from '@/app/types/styled'
 
+/*
+ * Fluid scale. Every `clamp()` maxes out at the original desktop value, so wide
+ * viewports render exactly as before — only narrow ones scale down. This is why
+ * pages never override a font-size in a media query.
+ */
 const typhograph = {
-  head: '62px',
-  subHead: '32px',
-  pageTitle: '26px',
-  body: '18px',
-  label: '16px',
+  head: 'clamp(4.2rem, 7.5vw, 62px)',
+  subHead: 'clamp(2.2rem, 4vw, 32px)',
+  pageTitle: 'clamp(2rem, 3vw, 26px)',
+  body: 'clamp(1.5rem, 2vw, 18px)',
+  label: 'clamp(1.4rem, 1.6vw, 16px)',
   snippet: '14px',
 }
 
@@ -20,6 +25,14 @@ const dark: Theme = {
     fontPrimary: '#607B96',
     fontSecondary: '#E5E9F0',
     line: '#1E2D3D',
+    accent: '#43D9AD',
+    highlight: '#FEA55F',
+    codeEntity: '#4D5BCE',
+    codeString: '#7FB0FF',
+    neonPink: '#FF4D9D',
+    neonCyan: '#4DE1FF',
+    // Glass, not chrome: stays dark in both themes so the visor reads as a visor.
+    visorGlass: '#0B1020',
   },
   typograph: typhograph,
 }
@@ -35,6 +48,14 @@ const light: Theme = {
     fontPrimary: '#607B96',
     fontSecondary: '#505A64',
     line: '#607B96',
+    accent: '#43D9AD',
+    highlight: '#FEA55F',
+    codeEntity: '#3B3F9E',
+    codeString: '#2F6BD6',
+    // Deepened so the neon still reads against a white card.
+    neonPink: '#D6206F',
+    neonCyan: '#0B93B8',
+    visorGlass: '#1E2A38',
   },
   typograph: typhograph,
 }

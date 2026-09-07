@@ -1,34 +1,43 @@
 import styled, { css } from 'styled-components'
+import { motion } from 'motion/react'
+import { media } from '@/styles/breakpoints'
 
 interface ITabStyleProps {
-  active: boolean
-  noAction?: boolean
+  $active: boolean
+  $noAction?: boolean
 }
 
-export const Container = styled.li<ITabStyleProps>`
+export const Container = styled(motion.li)<ITabStyleProps>`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 
   padding: 0 1.2rem;
-
   height: 100%;
 
-  border-right: 1px solid ${({ theme }) => theme.colors.line};
+  /* Stacked: the bar has no height of its own, so the tab sets the row's. */
+  ${media.tablet} {
+    min-height: 4rem;
+  }
 
-  background-color: ${({ active, theme }) =>
-    active && theme.colors.activeBackground};
+  border-right: 1px solid ${({ theme }) => theme.colors.line};
+  background-color: ${({ $active, theme }) =>
+    $active ? theme.colors.activeBackground : 'transparent'};
 
   cursor: pointer;
+  overflow: hidden;
 
   > p {
     margin-right: 4.6rem;
-    color: ${({ active, theme }) => active && theme.colors.activeTitle};
+    white-space: nowrap;
+    color: ${({ $active, theme }) =>
+      $active ? theme.colors.activeTitle : theme.colors.fontPrimary};
   }
 
   .tab-button_close {
-    display: ${({ active }) => active ? "flex": "none"};
+    display: ${({ $active }) => ($active ? 'flex' : 'none')};
     align-items: center;
     justify-content: center;
 
@@ -63,9 +72,19 @@ export const Container = styled.li<ITabStyleProps>`
     background-color: #ea4835;
   }
 
-  ${({ noAction }) =>
-    noAction &&
+  ${({ $noAction }) =>
+    $noAction &&
     css`
       pointer-events: none;
     `}
+`
+
+/** Shared layoutId marker — glides between tabs on activation. */
+export const ActiveMarker = styled(motion.span)`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: ${({ theme }) => theme.colors.highlight};
 `

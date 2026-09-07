@@ -160,3 +160,16 @@ export const sideNavData = {
     ]
   },
 }
+/** Every file in the tree, flattened — used to resolve the default tab by id. */
+const allTabs = Object.values(sideNavData)
+  .flatMap((info) => info.sections)
+  .flatMap((section) => section.folders)
+  .flatMap((folder) => folder.tabs)
+
+/**
+ * Opened on the visitor's first arrival at /sobre-mim, so the editor pane is
+ * never an empty "Woops!" on a page whose whole point is the bio.
+ */
+export const DEFAULT_TAB_ID = 'about-me'
+
+export const defaultTabs = allTabs.filter((tab) => tab.id === DEFAULT_TAB_ID)

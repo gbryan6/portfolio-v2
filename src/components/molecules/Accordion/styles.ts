@@ -1,30 +1,19 @@
-import styled, { keyframes } from "styled-components";
+import styled from 'styled-components'
+import { media } from '@/styles/breakpoints'
 
-interface IAccordion {
-  isOpen: boolean
+interface IAccordionStyleProps {
+  $isOpen: boolean
 }
 
-const fadeIn = keyframes`
-  from {
-    height: 0;
-    opacity: 0;
-  }
-  to {
-    padding: 1.6rem 1.6rem;
-    height: auto;
-    opacity: 1;
-  }
-`;
-
-
-export const Container = styled.div<IAccordion>`
+export const Container = styled.div<IAccordionStyleProps>`
   display: flex;
   flex-direction: column;
-  
+
   width: 100%;
 
   & + div > div.accordion-head {
-    ${({ isOpen, theme }) => isOpen && ` border-top: 1px solid ${theme.colors.line}`};
+    ${({ $isOpen, theme }) =>
+      $isOpen && `border-top: 1px solid ${theme.colors.line}`};
   }
 
   .accordion-head {
@@ -40,33 +29,39 @@ export const Container = styled.div<IAccordion>`
     border-bottom: 1px solid ${({ theme }) => theme.colors.line};
 
     cursor: pointer;
+  }
+
+  .accordion-arrow {
+    display: inline-flex;
+    margin-right: 1.2rem;
 
     > svg {
-      color: ${({ isOpen, theme }) => isOpen ? theme.colors.activeTitle : theme.colors.fontPrimary};
       width: 2rem;
       height: 2rem;
-
-      margin-right: 1.2rem;
-      transition: transform 0.3s ease; 
-      transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0deg)')}; 
+      color: ${({ $isOpen, theme }) =>
+        $isOpen ? theme.colors.activeTitle : theme.colors.fontPrimary};
     }
-  }  
+  }
 
-  .accordion-content {
+  .accordion-content_inner {
     display: flex;
     flex-direction: column;
-    height: 0;
-  
-
-    overflow: hidden;
-    animation-duration: 0.2s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-    animation-name: ${({ isOpen }) => (isOpen && fadeIn)};
+    padding: 1.6rem;
   }
 
   .label-button {
     margin-bottom: 0.8rem;
   }
 
-`;
+  /*
+   * Stacked layout: the heads become full-width tap targets, so they get a
+   * resting surface to sit on. buttonColor is the token for exactly that and
+   * carries its own dark/light pair — grey-blue on dark, grey on light.
+   */
+  ${media.tablet} {
+    .accordion-head {
+      background-color: ${({ theme }) => theme.colors.buttonColor};
+      transition: background-color var(--motion-base) ease;
+    }
+  }
+`

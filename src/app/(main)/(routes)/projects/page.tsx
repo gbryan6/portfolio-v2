@@ -1,115 +1,81 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+
+import { Container } from '@/styles/pages/projects'
+import SideNav from '@/components/organisms/SideNav'
+import ProjectGrid from '@/components/organisms/ProjectGrid'
+import TabBar from '@/components/molecules/TabBar'
 import Tab from '@/components/molecules/Tab'
 import Accordion from '@/components/molecules/Accordion'
-import TabBar from '@/components/molecules/TabBar'
 import TechCheckbox from '@/components/molecules/TechCheckbox'
-import SideNav from '@/components/organisms/SideNav'
-import { Container } from '@/styles/pages/projects'
-import { IconType } from 'react-icons'
-import { FaCss3, FaHtml5, FaJs, FaReact } from 'react-icons/fa6'
+import { Presence } from '@/components/motion'
+import { techFilters, projects, type TechId } from './_data'
 
-interface Tech {
-  icon: IconType
-  selected: boolean
-  techName: string
-  id: string
-}
+export default function Projects() {
+  const [selected, setSelected] = useState<TechId[]>([])
 
-function Page() {
-  const [selectedTechs, setSelectedTechs] = useState<string[]>([])
-  const [techs, setTechs] = useState<Tech[]>([
-    {
-      icon: FaHtml5,
-      selected: false,
-      techName: 'HTML',
-      id: 'html-tech',
-    },
-    {
-      icon: FaCss3,
-      selected: false,
-      techName: 'CSS',
-      id: 'css-tech',
-    },
-    {
-      icon: FaReact,
-      selected: false,
-      techName: 'Styled-components',
-      id: 'styled-components-tech',
-    },
-    {
-      icon: FaReact,
-      selected: false,
-      techName: 'Tailwind',
-      id: 'tailwind-tech',
-    },
-    {
-      icon: FaJs,
-      selected: false,
-      techName: 'JavaScript',
-      id: 'javascript-tech',
-    },
-    {
-      icon: FaReact,
-      selected: false,
-      techName: 'Typescript',
-      id: 'typescript-tech',
-    },
-    {
-      icon: FaReact,
-      selected: false,
-      techName: 'React',
-      id: 'react-tech',
-    },
-  ])
-
-  const handleTechSelect = (id: string) => {
-    setTechs((prevTechs) =>
-      prevTechs.map((tech) =>
-        tech.id === id ? { ...tech, selected: !tech.selected } : tech
-      )
+  const toggle = (id: TechId) =>
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]
     )
 
-    setTechs((updatedTechs) => {
-      const selectedTechNames = updatedTechs
-        .filter((tech) => tech.selected)
-        .map((tech) => tech.techName)
-      setSelectedTechs(selectedTechNames)
-      return updatedTechs
-    })
-  }
+  // ANY-match: a project shows if it has at least one selected tech.
+  const visible = useMemo(
+    () =>
+      selected.length === 0
+        ? projects
+        : projects.filter((p) => p.techs.some((t) => selected.includes(t))),
+    [selected]
+  )
+
+  // stable filter order (not click order) -> always "React; CSS; Vue"
+  const summaryLabel = techFilters
+    .filter((f) => selected.includes(f.id))
+    .map((f) => f.label)
+    .join('; ')
 
   return (
     <Container>
       <SideNav>
         <Accordion title="projetos">
-          {techs.map((tech) => {
-            return (
-              <TechCheckbox
-                key={tech.id}
-                techCheckboxData={tech}
-                onChangeValue={(tech) => handleTechSelect(tech.id)}
-              />
-            )
-          })}
+          {techFilters.map((filter) => (
+            <TechCheckbox
+              key={filter.id}
+              techCheckboxData={{
+                id: filter.id,
+                icon: filter.icon,
+                techName: filter.label,
+                selected: selected.includes(filter.id),
+              }}
+              onChangeValue={(row) => toggle(row.id as TechId)}
+            />
+          ))}
         </Accordion>
       </SideNav>
-      {selectedTechs.length > 0 && (
-        <TabBar>
-          <Tab
-            tabData={{
-              active: false,
-              content: '',
-              title: `${selectedTechs.join('; ')}`,
-              id: 'default-tab',
-            }}
-            noAction={true}
-          />
-        </TabBar>
-      )}
+
+      <TabBar>
+        <Presence mode="wait" initial={false}>
+          {selected.length > 0 && (
+            <Tab
+              key={summaryLabel}
+              onClose={() => setSelected([])}
+              tabData={{
+                id: 'filter-tab',
+                title: summaryLabel,
+                content: '',
+                active: true,
+              }}
+            />
+          )}
+        </Presence>
+      </TabBar>
+
+      <ProjectGrid
+        projects={visible}
+        total={projects.length}
+        onClear={() => setSelected([])}
+      />
     </Container>
   )
 }
-
-export default Page

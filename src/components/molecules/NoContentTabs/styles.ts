@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from '@/styles/breakpoints';
 
 export const Container = styled.div`
   grid-area: CT;
@@ -10,7 +11,13 @@ export const Container = styled.div`
 
   width: 100%;
   height: 80%;
-  
+
+  ${media.tablet} {
+    height: auto;
+    padding: 4rem 2.4rem;
+    text-align: center;
+  }
+
   .no-content_top{
     display: flex;
     align-items: center;

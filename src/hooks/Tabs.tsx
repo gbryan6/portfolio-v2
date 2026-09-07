@@ -1,6 +1,13 @@
 'use client'
 
-import React, { createContext, useState, useContext, useMemo } from 'react'
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useMemo,
+  useCallback,
+  useRef,
+} from 'react'
 
 export type Tab = {
   id: string
@@ -16,7 +23,13 @@ type TabsContextType = {
   setActiveTab: (tabId: string) => void
   setActiveInfo: (info: 'dev' | 'hobbies') => void
   addTab: (newTab: Tab) => void
+  /** Opens `initial` once per session — see the implementation for why. */
+  seedTabs: (initial: Tab[]) => void
   removeTab: (tabId: string) => void
+  reorderTabs: (orderedIds: string[]) => void
+  /** True while a file is being dragged from the sidebar towards the tab/content drop zone. */
+  isDraggingFile: boolean
+  setDraggingFile: (value: boolean) => void
 }
 
 interface ITabsContextProvider {
@@ -27,58 +40,104 @@ const TabsContext = createContext<TabsContextType>({} as TabsContextType)
 
 export const TabsProvider: React.FC<ITabsContextProvider> = ({ children }) => {
   const [tabs, setTabs] = useState<Tab[]>([])
-  const [activeInfo, setActiveInfo] = useState<'dev' | 'hobbies'>('dev')
+  const [activeInfo, setActiveInfoState] = useState<'dev' | 'hobbies'>('dev')
+  const [isDraggingFile, setDraggingFile] = useState(false)
 
-  const setActiveTab = (tabId: string) => {
-    const updatedTabs = tabs.map((tab) => ({
-      ...tab,
-      active: tab.id === tabId,
-    }))
-    setTabs(updatedTabs)
-  }
+  const setActiveTab = useCallback((tabId: string) => {
+    setTabs((prev) => prev.map((tab) => ({ ...tab, active: tab.id === tabId })))
+  }, [])
 
-  const addTab = (newTab: Tab) => {
-    const tabExists = tabs.some((tab) => tab.id === newTab.id)
+  const setActiveInfo = useCallback((info: 'dev' | 'hobbies') => {
+    setActiveInfoState(info)
+  }, [])
 
-    if (tabExists) {
-      const updatedTabs = tabs.map((tab) => ({
-        ...tab,
-        active: tab.id === newTab.id,
-      }))
-      setTabs(updatedTabs)
-    } else {
-      setTabs([
-        ...tabs.map((tab) => ({ ...tab, active: false })),
+  const addTab = useCallback((newTab: Tab) => {
+    setTabs((prev) => {
+      if (prev.some((tab) => tab.id === newTab.id)) {
+        return prev.map((tab) => ({ ...tab, active: tab.id === newTab.id }))
+      }
+      return [
+        ...prev.map((tab) => ({ ...tab, active: false })),
         { ...newTab, active: true },
-      ])
-    }
-  }
+      ]
+    })
+  }, [])
 
-  const removeTab = (tabId: string) => {
-    const updatedTabs = tabs.filter((tab) => tab.id !== tabId)
-    console.log(updatedTabs)
-    setTabs(updatedTabs)
-  }
+  /*
+   * Opens a starting set the first time a page asks, and never again. It has to
+   * be once-per-session rather than once-per-mount: the tab list is global and
+   * survives navigation, so re-seeding on every visit to about-me would reopen
+   * a tab the visitor had deliberately closed.
+   */
+  const seeded = useRef(false)
+  const seedTabs = useCallback((initial: Tab[]) => {
+    if (seeded.current || initial.length === 0) return
+    seeded.current = true
 
-  const activeTab = useMemo(() => {
-    return tabs.find((tab) => tab.active);
-  }, [tabs])
+    setTabs((prev) => {
+      if (prev.length > 0) return prev
+      return initial.map((tab, index) => ({ ...tab, active: index === 0 }))
+    })
+  }, [])
 
-  return (
-    <TabsContext.Provider
-      value={{
-        tabs,
-        activeInfo,
-        activeTab,
-        setActiveTab,
-        setActiveInfo,
-        addTab,
-        removeTab,
-      }}
-    >
-      {children}
-    </TabsContext.Provider>
+  const removeTab = useCallback((tabId: string) => {
+    setTabs((prev) => {
+      const index = prev.findIndex((tab) => tab.id === tabId)
+      if (index === -1) return prev
+
+      const wasActive = prev[index].active
+      const next = prev.filter((tab) => tab.id !== tabId)
+
+      // keep a tab focused: hand `active` to a neighbour (previous, else next)
+      if (wasActive && next.length > 0) {
+        const neighbour = Math.min(index, next.length - 1)
+        return next.map((tab, i) => ({ ...tab, active: i === neighbour }))
+      }
+      return next
+    })
+  }, [])
+
+  const reorderTabs = useCallback((orderedIds: string[]) => {
+    setTabs((prev) => {
+      const byId = new Map(prev.map((tab) => [tab.id, tab]))
+      const next = orderedIds
+        .map((id) => byId.get(id))
+        .filter((tab): tab is Tab => Boolean(tab))
+      return next.length === prev.length ? next : prev
+    })
+  }, [])
+
+  const activeTab = useMemo(() => tabs.find((tab) => tab.active), [tabs])
+
+  const value = useMemo(
+    () => ({
+      tabs,
+      activeInfo,
+      activeTab,
+      setActiveTab,
+      setActiveInfo,
+      addTab,
+      seedTabs,
+      removeTab,
+      reorderTabs,
+      isDraggingFile,
+      setDraggingFile,
+    }),
+    [
+      tabs,
+      activeInfo,
+      activeTab,
+      setActiveTab,
+      setActiveInfo,
+      addTab,
+      seedTabs,
+      removeTab,
+      reorderTabs,
+      isDraggingFile,
+    ]
   )
+
+  return <TabsContext.Provider value={value}>{children}</TabsContext.Provider>
 }
 
 export const useTabs = () => useContext(TabsContext)

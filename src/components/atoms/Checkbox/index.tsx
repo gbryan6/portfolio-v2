@@ -1,19 +1,54 @@
-import React, { InputHTMLAttributes, useState } from 'react';
-import { FaCheck } from "react-icons/fa6";
-import { Container } from './styles';
+'use client'
 
-interface ICheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
-  checked?: boolean; 
-  checkboxId: string;
+import { motion } from 'motion/react'
+import { FaCheck } from 'react-icons/fa6'
+
+import { Container } from './styles'
+import { Presence, useMotionPreset } from '@/components/motion'
+
+interface ICheckboxProps {
+  /** id of the real input — the owning <label> points at this. */
+  id: string
+  checked: boolean
+  onChange: (checked: boolean) => void
+  disabled?: boolean
 }
 
-function Checkbox({ checked: checkedProp, checkboxId, ...rest }: ICheckboxProps) {
+/**
+ * Renders only the control, never its own <label>: the caller owns the label so
+ * a click anywhere on the row activates the input exactly once.
+ */
+function Checkbox({ id, checked, onChange, disabled }: ICheckboxProps) {
+  const glyph = useMotionPreset('snappy')
+
   return (
-    <Container htmlFor={`checkbox-${checkboxId}`}>
-      <input type="checkbox" id={`checkbox-${checkboxId}`} checked={checkedProp} {...rest} readOnly />
-      <span className="checkmark">{checkedProp && <FaCheck />}</span>
+    <Container>
+      <input
+        type="checkbox"
+        id={id}
+        checked={checked}
+        disabled={disabled}
+        onChange={(event) => onChange(event.target.checked)}
+      />
+
+      <span className="checkmark">
+        <Presence initial={false}>
+          {checked && (
+            <motion.span
+              key="check"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0 }}
+              transition={glyph}
+              style={{ display: 'inline-flex' }}
+            >
+              <FaCheck />
+            </motion.span>
+          )}
+        </Presence>
+      </span>
     </Container>
-  );
+  )
 }
 
-export default Checkbox;
+export default Checkbox

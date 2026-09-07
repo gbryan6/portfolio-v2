@@ -11,6 +11,13 @@ export type Theme = {
     fontPrimary: string,
     fontSecondary: string,
     line: string,
+    accent: string,
+    highlight: string,
+    codeEntity: string,
+    codeString: string,
+    neonPink: string,
+    neonCyan: string,
+    visorGlass: string,
   },
   typograph: {
     head: string,
