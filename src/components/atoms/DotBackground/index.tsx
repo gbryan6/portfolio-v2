@@ -6,11 +6,11 @@ import { useTheme } from '@/hooks/Theme'
 import { Canvas } from './styles'
 
 /** Grid spacing in px — dense, but each dot stays near-invisible until lit by the cursor. */
-const GAP = 15
+const GAP = 8
 const DOT_RADIUS = 1.2
 const BASE_ALPHA = 0.09
 const MAX_ALPHA = 0.95
-const GLOW_RADIUS = 200
+const GLOW_RADIUS = 90
 /** Lerp factor the glow's focal point chases the cursor with — softens jumps so it never feels twitchy. */
 const FOLLOW_EASE = 0.09
 /** How long (ms) the loop keeps running after the focus settles, before going idle. */

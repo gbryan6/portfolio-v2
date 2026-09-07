@@ -15,6 +15,9 @@ export type Theme = {
     highlight: string,
     codeEntity: string,
     codeString: string,
+    neonPink: string,
+    neonCyan: string,
+    visorGlass: string,
   },
   typograph: {
     head: string,

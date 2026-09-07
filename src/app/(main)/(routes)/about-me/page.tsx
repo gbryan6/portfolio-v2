@@ -1,9 +1,10 @@
 'use client'
 
+import { useEffect } from 'react'
 import type { Variants } from 'motion/react'
 
 import { Container, ContentPane } from '@/styles/pages/aboutMe'
-import { sideNavData } from './_data'
+import { sideNavData, defaultTabs } from './_data'
 import { useTabs } from '@/hooks/Tabs'
 import SideNav from '@/components/organisms/SideNav'
 import TabBar from '@/components/molecules/TabBar'
@@ -12,8 +13,14 @@ import TabContentEditor from '@/components/molecules/TabContentEditor'
 import { Presence, useMotionPreset } from '@/components/motion'
 
 export default function AboutMe() {
-  const { activeInfo, activeTab, tabs, isDraggingFile } = useTabs()
+  const { activeInfo, activeTab, tabs, isDraggingFile, seedTabs } = useTabs()
   const actualNav = sideNavData[activeInfo]
+
+  // Arrive with the bio already open. seedTabs is a no-op after the first call,
+  // so coming back here later never reopens a tab the visitor closed.
+  useEffect(() => {
+    seedTabs(defaultTabs)
+  }, [seedTabs])
 
   const enter = useMotionPreset('enter')
   const exit = useMotionPreset('fast')

@@ -47,6 +47,9 @@ Há dois objetos de tema, `dark` (padrão) e `light`, com **as mesmas chaves**.
 | `highlight` | `#FEA55F` | `#FEA55F` | Laranja de ação primária (`start-game`), sublinhado de rota ativa, marcador de tab ativa |
 | `codeEntity` | `#4D5BCE` | `#3B3F9E` | "Project N" no heading do card de projeto (roxo-azulado). Promoveu o `.snippet-purple` de `home.ts` |
 | `codeString` | `#7FB0FF` | `#2F6BD6` | `_slug` no heading do card (azul claro, distinto do teal do `accent`) |
+| `neonPink` | `#FF4D9D` | `#D6206F` | Borda quente da aberração cromática do mascote (`Astronaut`) — o par com `neonCyan` |
+| `neonCyan` | `#4DE1FF` | `#0B93B8` | Borda fria da mesma aberração; também a tela do celular do mascote |
+| `visorGlass` | `#0B1020` | `#1E2A38` | Vidro do capacete e moldura do celular. **Escuro nos dois temas de propósito** — visor é vidro, não superfície de UI, então não inverte |
 
 ### 2.2 Tipografia — `theme.typograph`
 

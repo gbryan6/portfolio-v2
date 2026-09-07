@@ -6,6 +6,7 @@ import React, {
   useContext,
   useMemo,
   useCallback,
+  useRef,
 } from 'react'
 
 export type Tab = {
@@ -22,6 +23,8 @@ type TabsContextType = {
   setActiveTab: (tabId: string) => void
   setActiveInfo: (info: 'dev' | 'hobbies') => void
   addTab: (newTab: Tab) => void
+  /** Opens `initial` once per session — see the implementation for why. */
+  seedTabs: (initial: Tab[]) => void
   removeTab: (tabId: string) => void
   reorderTabs: (orderedIds: string[]) => void
   /** True while a file is being dragged from the sidebar towards the tab/content drop zone. */
@@ -57,6 +60,23 @@ export const TabsProvider: React.FC<ITabsContextProvider> = ({ children }) => {
         ...prev.map((tab) => ({ ...tab, active: false })),
         { ...newTab, active: true },
       ]
+    })
+  }, [])
+
+  /*
+   * Opens a starting set the first time a page asks, and never again. It has to
+   * be once-per-session rather than once-per-mount: the tab list is global and
+   * survives navigation, so re-seeding on every visit to about-me would reopen
+   * a tab the visitor had deliberately closed.
+   */
+  const seeded = useRef(false)
+  const seedTabs = useCallback((initial: Tab[]) => {
+    if (seeded.current || initial.length === 0) return
+    seeded.current = true
+
+    setTabs((prev) => {
+      if (prev.length > 0) return prev
+      return initial.map((tab, index) => ({ ...tab, active: index === 0 }))
     })
   }, [])
 
@@ -97,6 +117,7 @@ export const TabsProvider: React.FC<ITabsContextProvider> = ({ children }) => {
       setActiveTab,
       setActiveInfo,
       addTab,
+      seedTabs,
       removeTab,
       reorderTabs,
       isDraggingFile,
@@ -109,6 +130,7 @@ export const TabsProvider: React.FC<ITabsContextProvider> = ({ children }) => {
       setActiveTab,
       setActiveInfo,
       addTab,
+      seedTabs,
       removeTab,
       reorderTabs,
       isDraggingFile,

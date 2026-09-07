@@ -71,7 +71,11 @@ export default function Projects() {
         </Presence>
       </TabBar>
 
-      <ProjectGrid projects={visible} onClear={() => setSelected([])} />
+      <ProjectGrid
+        projects={visible}
+        total={projects.length}
+        onClear={() => setSelected([])}
+      />
     </Container>
   )
 }

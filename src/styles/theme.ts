@@ -29,6 +29,10 @@ const dark: Theme = {
     highlight: '#FEA55F',
     codeEntity: '#4D5BCE',
     codeString: '#7FB0FF',
+    neonPink: '#FF4D9D',
+    neonCyan: '#4DE1FF',
+    // Glass, not chrome: stays dark in both themes so the visor reads as a visor.
+    visorGlass: '#0B1020',
   },
   typograph: typhograph,
 }
@@ -48,6 +52,10 @@ const light: Theme = {
     highlight: '#FEA55F',
     codeEntity: '#3B3F9E',
     codeString: '#2F6BD6',
+    // Deepened so the neon still reads against a white card.
+    neonPink: '#D6206F',
+    neonCyan: '#0B93B8',
+    visorGlass: '#1E2A38',
   },
   typograph: typhograph,
 }

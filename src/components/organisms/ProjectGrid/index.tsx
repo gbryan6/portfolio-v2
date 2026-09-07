@@ -10,11 +10,18 @@ import { Presence, motionTokens, useMotionPreset } from '@/components/motion'
 import { Container, Grid, EmptyWrap } from './styles'
 
 interface IProjectGridProps {
+  /** Already filtered — what should actually render. */
   projects: Project[]
+  /** The catalogue before filtering; tells the two empty states apart. */
+  total: number
   onClear: () => void
 }
 
-export default function ProjectGrid({ projects, onClear }: IProjectGridProps) {
+export default function ProjectGrid({
+  projects,
+  total,
+  onClear,
+}: IProjectGridProps) {
   const enter = useMotionPreset('base')
 
   const container: Variants = {
@@ -46,7 +53,10 @@ export default function ProjectGrid({ projects, onClear }: IProjectGridProps) {
             animate={{ opacity: 1, transition: enter }}
             exit={{ opacity: 0, transition: { duration: 0.12 } }}
           >
-            <ProjectsEmptyState onClear={onClear} />
+            <ProjectsEmptyState
+              reason={total === 0 ? 'catalog' : 'filter'}
+              onClear={onClear}
+            />
           </EmptyWrap>
         )}
       </Presence>

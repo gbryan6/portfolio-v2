@@ -33,7 +33,12 @@ export const Container = styled(Link)<IButtonProps>`
     color: ${({ theme }) => theme.colors.fontPrimary};
     transition: color var(--motion-base) ease;
   }
-  > p > svg {
+  /*
+   * Descendant, not direct child: the theme toggle wraps its icon in the
+   * motion.span that rotates it, so a "> p > svg" rule skipped that one and it
+   * fell back to the react-icons default of 1em (i.e. the 14px snippet size).
+   */
+  > p svg {
     width: 24px;
     height: 24px;
     transition: color var(--motion-base) ease;
@@ -43,7 +48,7 @@ export const Container = styled(Link)<IButtonProps>`
     background-color: ${({ theme }) => theme.colors.activeBackground};
 
     > p,
-    > p > svg {
+    > p svg {
       color: ${({ theme }) => theme.colors.activeTitle};
     }
   }
